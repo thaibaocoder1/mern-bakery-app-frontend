@@ -222,7 +222,7 @@ const ProductDetails = () => {
             <div className="w-scrollbar scrollbar-track mt-4 flex w-full gap-x-2 overflow-hidden overflow-x-auto">
               {cakeInfo.cakeMedias.map((media, index) => (
                 <img
-                  src={displayImage(cakeInfo.cakeInfo.cakeThumbnail, cakeInfo.cakeInfo._id)}
+                  src={displayImage(media, cakeInfo.cakeInfo._id)}
                   className="size-48 rounded-xl bg-secondary-100 hover:cursor-pointer"
                   key={index}
                   onClick={() => handleChangeImage(media)}
