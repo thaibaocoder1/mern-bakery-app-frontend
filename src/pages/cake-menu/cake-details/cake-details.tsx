@@ -25,6 +25,7 @@ import clientRoutes from "@/config/routes/client-routes.config";
 import { useCookies } from "react-cookie";
 import ModelFeedBacks from "./model-feed-backs";
 import ModalConfirm from "@/components/admin/modal-confirm";
+import { displayImage } from "@/utils/display-image";
 const ProductDetails = () => {
   const { cakeId } = useParams();
   const navigate = useNavigate();
@@ -213,7 +214,7 @@ const ProductDetails = () => {
           <div className="w-full">
             <div className="flex items-center justify-center rounded-lg bg-danger-50 px-4 md:h-[632px]">
               <Image
-                src={`http://localhost:3000/images/${cakeInfo.cakeInfo._id}/${cakeInfo.cakeMedias[0]}`}
+                src={displayImage(cakeInfo.cakeInfo.cakeThumbnail, cakeInfo.cakeInfo._id)}
                 alt="Error"
                 className="h-96 w-full object-cover max-sm:h-96"
               />
@@ -221,7 +222,7 @@ const ProductDetails = () => {
             <div className="w-scrollbar scrollbar-track mt-4 flex w-full gap-x-2 overflow-hidden overflow-x-auto">
               {cakeInfo.cakeMedias.map((media, index) => (
                 <img
-                  src={`http://localhost:3000/images/${cakeInfo.cakeInfo._id}/${media}`}
+                  src={displayImage(cakeInfo.cakeInfo.cakeThumbnail, cakeInfo.cakeInfo._id)}
                   className="size-48 rounded-xl bg-secondary-100 hover:cursor-pointer"
                   key={index}
                   onClick={() => handleChangeImage(media)}

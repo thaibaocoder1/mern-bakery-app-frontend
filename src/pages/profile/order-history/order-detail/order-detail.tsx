@@ -23,6 +23,7 @@ import FormOrderFeedback from "./form-order-feedback";
 import FormReturnOrder from "./form-return-order";
 import OrderCustomerInfo from "./order-customer-info";
 import OrderStatus from "./order-status";
+import { displayImage } from "@/utils/display-image";
 const OrderDetail = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -187,7 +188,7 @@ const OrderDetail = () => {
                     <div className="mt-2 flex items-center justify-between p-2" key={index}>
                       <div className="flex items-center gap-x-4">
                         <Image
-                          src={`http://localhost:3000/images/${(item?.cakeId as ICake)._id}/${(item?.cakeId as ICake)?.cakeThumbnail}`}
+                          src={displayImage((item.cakeId as ICake).cakeThumbnail, (item.cakeId as ICake)._id)}
                           alt={slugify((item.cakeId as ICake).cakeName)}
                           height={75}
                           width={75}

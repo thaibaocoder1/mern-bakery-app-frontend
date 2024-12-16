@@ -29,6 +29,7 @@ import { TSelectedVariant } from "@/types/cart";
 import { toast } from "react-toastify";
 import ModalConfirm from "@/components/admin/modal-confirm";
 import { ICake } from "@/types/cake";
+import { displayImage } from "@/utils/display-image";
 const BranchCart = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { isOpen: isOpenDelete, onOpen: onOpenDelete, onOpenChange: onOpenChangeDelete } = useDisclosure();
@@ -222,7 +223,10 @@ const BranchCart = () => {
                   <div className="mt-4 grid grid-cols-6 items-center max-md:grid-cols-5" key={index}>
                     <div className="flex gap-x-1 justify-self-center">
                       <Image
-                        src={`http://localhost:3000/images/${cake?.cakeInfo?._id}/${cake.cakeInfo?.cakeThumbnail}`}
+                        src={displayImage(
+                          (cake.cakeInfo as ICake).cakeThumbnail,
+                          (cake.cakeInfo as ICake)._id,
+                        )}
                         alt="Error"
                         className="h-[142px] w-[147px]"
                       />

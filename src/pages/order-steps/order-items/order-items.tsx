@@ -2,6 +2,7 @@ import { ICake, ICakeVariant } from "@/types/cake";
 import { IUserCart, TSelectedVariant } from "@/types/cart";
 import { IOrderGroupForm, TDeliveryMethod } from "@/types/order";
 import { IDecodedUrlParams } from "@/types/voucher";
+import { displayImage } from "@/utils/display-image";
 import { calculateDiscountPrice, formatCurrencyVND } from "@/utils/money-format";
 import { Button, DatePicker, DateValue, Divider, Image, Input, Switch, Tooltip } from "@nextui-org/react";
 import clsx from "clsx";
@@ -186,7 +187,10 @@ const OrderItems = ({
                     <div className={"col-span-6 flex items-center gap-4"}>
                       <div className={"aspect-square h-24 w-24"}>
                         <Image
-                          src={`http://localhost:3000/images/${cake?.cakeInfo?._id}/${cake.cakeInfo?.cakeThumbnail}`}
+                          src={displayImage(
+                            (cake.cakeInfo as ICake).cakeThumbnail,
+                            (cake.cakeInfo as ICake)._id,
+                          )}
                           alt="Error"
                         />
                       </div>

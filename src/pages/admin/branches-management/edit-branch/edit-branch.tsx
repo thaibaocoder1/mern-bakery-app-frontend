@@ -9,6 +9,7 @@ import useStaffAxios from "@/hooks/useStaffAxios";
 import { IAPIResponse } from "@/types/api-response";
 import { IBranch, IBranchUpdateForm, TBranchType } from "@/types/branch";
 import { ICake } from "@/types/cake";
+import { displayImage } from "@/utils/display-image";
 import { Time } from "@internationalized/date";
 import {
   Button,
@@ -403,7 +404,7 @@ const EditBranch = ({ refBack }: EditBranchProps) => {
                     key={index}
                   >
                     <img
-                      src={`http://localhost:3000/images/${cakeData._id}/${cakeData.cakeThumbnail}`}
+                      src={displayImage(cakeData.cakeThumbnail, cakeData._id)}
                       alt="Error"
                       className="size-32"
                     />

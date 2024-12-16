@@ -12,6 +12,7 @@ import { Button, Divider, Input, ScrollShadow, Select, SelectItem, TimeInput } f
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { displayImage } from "@/utils/display-image";
 
 const CreateBranch = () => {
   const staffAxios = useStaffAxios();
@@ -283,7 +284,7 @@ const CreateBranch = () => {
               >
                 <div>
                   <img
-                    src={`http://localhost:3000/images/${cake._id}/${cake.cakeThumbnail}`}
+                    src={displayImage(cake.cakeThumbnail, cake._id)}
                     alt="Error"
                     className="size-32 object-contain"
                   />
