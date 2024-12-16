@@ -1,16 +1,16 @@
 import Banner from "@/assets/images/HeroBanner.png";
-import { Image, Spinner } from "@nextui-org/react";
 import CakeCard from "@/components/cakes/cake-card";
-import BranchInfoSection from "./branch-info-section";
-import FeedbackCustomers from "./feedback-customers";
+import LoadingClient from "@/components/common/loading-client";
 import { apiRoutes } from "@/config/routes/api-routes.config";
-import { Fragment } from "react/jsx-runtime";
-import { useEffect, useState } from "react";
 import useAxios from "@/hooks/useAxios";
 import { IAPIResponse } from "@/types/api-response";
-import { ICake } from "@/types/cake";
 import { IBranch } from "@/types/branch";
-import LoadingClient from "@/components/common/loading-client";
+import { ICake } from "@/types/cake";
+import { Image } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import { Fragment } from "react/jsx-runtime";
+import BranchInfoSection from "./branch-info-section";
+import FeedbackCustomers from "./feedback-customers";
 
 const HomePage = () => {
   const axiosClient = useAxios();
@@ -45,7 +45,7 @@ const HomePage = () => {
 
           <div className="split-column grid gap-x-4 gap-y-6 max-lg:px-6">
             {listCakes.slice(0, 4).map((cake, index) => (
-              <Fragment key={index}>
+              <Fragment key={cake._id}>
                 <CakeCard cakeData={cake} />
               </Fragment>
             ))}

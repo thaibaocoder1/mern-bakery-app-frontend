@@ -1,4 +1,6 @@
-const baseURL = "http://localhost:3000/api/";
+import { getEndpointBackend } from "@/utils/get-url";
+
+const baseURL = `${getEndpointBackend()}/api/`;
 
 const apiRoutes = {
   auth: {
