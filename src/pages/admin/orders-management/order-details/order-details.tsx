@@ -104,13 +104,16 @@ const OrderDetails = ({ refBack }: OrderDetailsProps) => {
     try {
       const [orderDetailResponse, planListResponse] = await Promise.all([
         staffAxios.get<IAPIResponse<IOrder>>(apiRoutes.orders.getOne(orderId as string)),
-        staffAxios.get<IAPIResponse<IPlan[], IPaginationMetadata>>(apiRoutes.plans.getAll, {
-          params: {
-            noPagination: true,
-            planStatus: "open",
-            planType: selectedDayType ? "day" : "week",
+        staffAxios.get<IAPIResponse<IPlan[], IPaginationMetadata>>(
+          apiRoutes.branches.getAllPlanForBranch(currentBranch),
+          {
+            params: {
+              noPagination: true,
+              planStatus: "open",
+              planType: selectedDayType ? "day" : "week",
+            },
           },
-        }),
+        ),
       ]);
 
       setOrderDetail(orderDetailResponse.data.results);

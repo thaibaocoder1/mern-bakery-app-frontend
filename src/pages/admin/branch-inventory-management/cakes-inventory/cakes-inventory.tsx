@@ -65,7 +65,8 @@ const CakesInventory = ({ currentBranch }: CakesInventoryProps) => {
     setCurrentSelectCake(
       listCakes.find(
         (cake) =>
-          cake.cakeId._id === cakeId &&
+          cake.cakeId._id.toString() === cakeId.toString() &&
+          cake.selectedVariants.length === selectedVariants.length &&
           cake.selectedVariants.every((variant) =>
             selectedVariants.some(
               (cakeVariant) =>
@@ -154,7 +155,7 @@ const CakesInventory = ({ currentBranch }: CakesInventoryProps) => {
           emptyContent={isFetching ? <Loading /> : <p className={"italic"}>Không có bánh tồn trong kho</p>}
         >
           {(cake) => (
-            <TableRow key={cake.cakeId._id}>
+            <TableRow key={cake.cakeId._id + Math.random()}>
               <TableCell>
                 <Tooltip
                   content={`Biến thể: ${handleShowSelectedVariant(cake.selectedVariants, cake.cakeId.cakeVariants)}`}

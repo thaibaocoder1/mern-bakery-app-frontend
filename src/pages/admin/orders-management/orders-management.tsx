@@ -2,12 +2,26 @@ import AdminHeader from "@/components/admin/admin-header";
 import Loading from "@/components/admin/loading";
 import WrapperContainer from "@/components/admin/wrapper-container";
 import iconConfig from "@/config/icons/icon-config";
+import adminRoutes from "@/config/routes/admin-routes.config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
+import useRole from "@/hooks/useRole";
+import useStaffAxios from "@/hooks/useStaffAxios";
+import { IAPIResponse, IPaginationMetadata } from "@/types/api-response";
 import { IOrder, ITotalAnalytics } from "@/types/order";
+import { formatDate } from "@/utils/format-date";
+import {
+  MapOrderStatusColor,
+  MapOrderStatusText,
+  MapOrderTypeColor,
+  MapOrderTypeText,
+  MapPaymentMethodColor,
+  MapPaymentMethodText,
+} from "@/utils/map-data/orders";
+import { formatCurrencyVND } from "@/utils/money-format";
+import { sliceText } from "@/utils/slice-text";
 import {
   Button,
   Chip,
-  ChipProps,
   Input,
   Pagination,
   Select,
@@ -19,24 +33,9 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import QuickReport from "./quick-report";
-import adminRoutes from "@/config/routes/admin-routes.config";
-import useStaffAxios from "@/hooks/useStaffAxios";
-import { IAPIResponse, IPaginationMetadata } from "@/types/api-response";
-import { formatDate } from "@/utils/format-date";
-import { formatCurrencyVND } from "@/utils/money-format";
-import { sliceText } from "@/utils/slice-text";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  MapOrderStatusText,
-  MapPaymentMethodColor,
-  MapPaymentMethodText,
-  MapOrderTypeColor,
-  MapOrderTypeText,
-  MapOrderStatusColor,
-} from "@/utils/map-data/orders";
-import useRole from "@/hooks/useRole";
+import QuickReport from "./quick-report";
 
 const OrdersManagement = () => {
   const navigate = useNavigate();

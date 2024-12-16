@@ -22,7 +22,7 @@ const MaterialUsagePlan: React.FC<MaterialUsagePlanProps> = ({ materialUsage }) 
       </TableHeader>
       <TableBody emptyContent={"Không có dữ liệu kế hoạch"}>
         {materialUsage?.map((material) => (
-          <TableRow>
+          <TableRow key={material.materialId._id}>
             <TableCell
               className={clsx("font-semibold", {
                 "text-danger": material.empty,

@@ -160,6 +160,7 @@ const apiRoutes = {
     getAll: "branches/",
     create: "branches/",
     getBranchInfo: (branchId: string) => `branches/${branchId}`,
+    getAllPlanForBranch: (branchId: string) => `branches/${branchId}/plans`,
     updateBranchInfor: (branchId: string) => `branches/${branchId}`,
     delete: (branchId: string) => `branches/${branchId}`,
     getBusinessProducts: (branchId: string) => `branches/${branchId}/business-products`,
