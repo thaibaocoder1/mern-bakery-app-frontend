@@ -54,7 +54,7 @@ const handleApplySystemVoucher = ({
       if (response.status === "success") {
         const { discountValue, maxValue, type } = response.voucherData;
         const subTotalPrice = orderGroup.subTotalPrice;
-        let reducedFee: number = calculateDiscount(subTotalPrice, shipFee, type, discountValue, maxValue);
+        const reducedFee: number = calculateDiscount(subTotalPrice, shipFee, type, discountValue, maxValue);
 
         setDiscountValueOfSystemVoucher(reducedFee);
         const encodedVoucherCodeSystem = btoa(

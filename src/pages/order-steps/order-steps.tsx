@@ -128,7 +128,7 @@ const OrderSteps = () => {
           const newVoucherCodeBranchApplied = { ...voucherCodeBranchApplied };
 
           const subTotalPrice = totalBranch(voucherBranchId);
-          let reducedFee = calculateDiscount(subTotalPrice, shipFee, type, discountValue, maxValue);
+          const reducedFee = calculateDiscount(subTotalPrice, shipFee, type, discountValue, maxValue);
           if (newVoucherCodeBranchApplied[voucherBranchId]) {
             return toast.error("Vui lòng xóa mã giảm giá cũ trước khi áp mã giảm giá mới");
           }
