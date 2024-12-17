@@ -98,19 +98,19 @@ const OrderDetails = ({ refBack }: OrderDetailsProps) => {
   const [cancelReason, setCancelReason] = useState<string>("");
   const [rejectedReason, setRejectedReason] = useState<string>("");
   const [selectedPlanId, setSelectedPlanId] = useState<string>("");
-  const [selectedDayType, setSelectedDayType] = useState(true);
+  const [selectedDayType, setSelectedDayType] = useState<null | string>(null);
 
   const fetchData = async () => {
     try {
       const [orderDetailResponse, planListResponse] = await Promise.all([
         staffAxios.get<IAPIResponse<IOrder>>(apiRoutes.orders.getOne(orderId as string)),
         staffAxios.get<IAPIResponse<IPlan[], IPaginationMetadata>>(
-          apiRoutes.branches.getAllPlanForBranch(currentBranch),
+          currentBranch ? apiRoutes.branches.getAllPlanForBranch(currentBranch) : apiRoutes.plans.getAll,
           {
             params: {
               noPagination: true,
               planStatus: "open",
-              planType: selectedDayType ? "day" : "week",
+              planType: !selectedDayType ? undefined : selectedDayType,
             },
           },
         ),
@@ -122,7 +122,12 @@ const OrderDetails = ({ refBack }: OrderDetailsProps) => {
         orderDetailResponse.data.results.branchId.branchInventory?.materials as TMaterialInventory[],
       );
       setPlanUsageMaterials(materialUsage);
-      setPlanList(planListResponse.data.results);
+      const filterdPlan = currentBranch
+        ? planListResponse.data.results
+        : planListResponse.data.results.filter(
+            (x) => x.branchId.toString() === orderDetailResponse.data.results.branchId._id.toString(),
+          );
+      setPlanList(filterdPlan);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -349,6 +354,10 @@ const OrderDetails = ({ refBack }: OrderDetailsProps) => {
         }
       });
   };
+  const handleOpenQueueModal = () => {
+    onOpenQueue();
+    setSelectedDayType("day");
+  };
 
   if (!orderDetail) return <Loading />;
 
@@ -371,7 +380,7 @@ const OrderDetails = ({ refBack }: OrderDetailsProps) => {
           (!orderDetail.customerId && orderDetail.orderType === "customerOrder") ||
           orderDetail.orderGroupId.paymentStatus === "success"
             ? handleConfirmOrder(String(orderDetail?._id), "processing")
-            : onOpenQueue(),
+            : handleOpenQueueModal(),
       },
       {
         color: "danger",
@@ -544,43 +553,41 @@ const OrderDetails = ({ refBack }: OrderDetailsProps) => {
         <ModalContent>
           {() => (
             <>
-              <ModalHeader className="flex flex-col gap-1">{`Danh sách kế hoạch sản xuất ${selectedDayType ? "ngày" : "tuần"}`}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">{`Danh sách kế hoạch sản xuất ${selectedDayType === "day" ? "ngày" : "tuần"}`}</ModalHeader>
               <ModalBody>
                 <div className="flex flex-col gap-y-2">
                   <div className="self-end">
                     <Switch
-                      isSelected={selectedDayType}
+                      isSelected={selectedDayType === "day"}
                       onValueChange={(isSelected) => {
-                        setSelectedDayType(isSelected);
+                        setSelectedDayType(isSelected ? "day" : "week");
                         setIsFetchingPlan(true);
                       }}
                     >
-                      {selectedDayType ? "Ngày" : "Tuần"}
+                      {selectedDayType === "day" ? "Ngày" : "Tuần"}
                     </Switch>
                   </div>
                   {isFetchingPlan ? (
                     <Spinner label="Đang tải dữ liệu..." />
-                  ) : planList && planList.length === 0 ? (
+                  ) : planList?.length === 0 ? (
                     <p className="italic">Hiện tại chưa có kế hoạch sản xuất nào!</p>
                   ) : (
                     planList &&
-                    planList.map((plan) => (
-                      <div
-                        key={plan._id}
-                        className={clsx(
-                          `flex select-none items-center justify-between gap-2 rounded-lg border p-4 hover:cursor-pointer`,
-                          {
-                            "border-2 border-primary": selectedPlanId === plan._id,
-                          },
-                        )}
-                        onClick={() => {
-                          setSelectedPlanId(plan._id as string);
-                        }}
-                        onDoubleClick={() => setSelectedPlanId("")}
-                      >
-                        <h6>{plan.planName}</h6>
-                      </div>
-                    ))
+                    planList
+                      .filter((plan) => !currentBranch || plan.branchId === currentBranch)
+                      .map((plan) => (
+                        <div
+                          key={plan._id}
+                          className={clsx(
+                            `flex select-none items-center justify-between gap-2 rounded-lg border p-4 hover:cursor-pointer`,
+                            { "border-2 border-primary": selectedPlanId === plan._id },
+                          )}
+                          onClick={() => setSelectedPlanId(plan._id as string)}
+                          onDoubleClick={() => setSelectedPlanId("")}
+                        >
+                          <h6>{plan.planName}</h6>
+                        </div>
+                      ))
                   )}
                 </div>
               </ModalBody>
