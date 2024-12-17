@@ -44,7 +44,7 @@ const HomePage = () => {
           </h1>
 
           <div className="split-column grid gap-x-4 gap-y-6 max-lg:px-6">
-            {listCakes.slice(0, 4).map((cake, index) => (
+            {listCakes.slice(0, 4).map((cake) => (
               <Fragment key={cake._id}>
                 <CakeCard cakeData={cake} />
               </Fragment>

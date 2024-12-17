@@ -162,11 +162,8 @@ const ProductDetails = () => {
     setCustomerCart({ ...customerCart, selectedVariants });
   };
   const handleChangeImage = (image: string) => {
-    console.log(image);
-    const newCakeInfo = { ...cakeInfo };
-    console.log(newCakeInfo);
-    newCakeInfo.cakeMedias = newCakeInfo.cakeMedias.filter((media) => media !== image);
-    newCakeInfo.cakeMedias.unshift(image);
+    const newCakeInfo: ICakeDetail = JSON.parse(JSON.stringify(cakeInfo));
+    newCakeInfo.cakeInfo.cakeThumbnail = image;
     setCakeInfo(newCakeInfo);
   };
   const handleBuyNow = () => {
@@ -197,7 +194,7 @@ const ProductDetails = () => {
       });
   };
   if (isLoading) return <LoadingClient />;
-  console.log(cakeInfo, "cakeInfo");
+
   return (
     <section>
       <ModalConfirm
@@ -368,6 +365,11 @@ const ProductDetails = () => {
                   Mua ngay
                 </Button>
               </div>
+              {cakeInfo.cakeInfo.isHide && (
+                <Button className="grow-[1]" size="lg" color="primary" radius="md" isDisabled>
+                  Sản phẩm chưa được mở bán
+                </Button>
+              )}
             </div>
           </div>
         </div>

@@ -263,16 +263,6 @@ const OrderDetail = () => {
                   <>
                     <Button
                       className="mb-2 w-full"
-                      variant="ghost"
-                      color="secondary"
-                      size="lg"
-                      radius="lg"
-                      onPress={() => onOpenBuyAgain()}
-                    >
-                      Mua lại đơn hàng này
-                    </Button>
-                    <Button
-                      className="mb-2 w-full"
                       variant="solid"
                       color="danger"
                       size="lg"

@@ -1,4 +1,4 @@
-import iconConfig, { iconSize } from "@/config/icons/icon-config";
+import iconConfig from "@/config/icons/icon-config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
 import clientRoutes from "@/config/routes/client-routes.config";
 import useAxios from "@/hooks/useAxios";
@@ -7,31 +7,15 @@ import { IAPIResponse } from "@/types/api-response";
 import { IAPIResponseError } from "@/types/api-response-error";
 import { IBranch } from "@/types/branch";
 import { ICake } from "@/types/cake";
-import { ICustomerCartForm, IUserCart, TSelectedVariant } from "@/types/cart";
+import { ICustomerCartForm, IUserCart } from "@/types/cart";
 import { displayImage } from "@/utils/display-image";
 import { formatCurrencyVND } from "@/utils/money-format";
 import { slugify } from "@/utils/slugify";
-import {
-  Button,
-  ButtonGroup,
-  CheckboxGroup,
-  Chip,
-  Image,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  Radio,
-  RadioGroup,
-  Spinner,
-  useDisclosure,
-} from "@nextui-org/react";
+import { Button, Chip, Image, useDisclosure } from "@nextui-org/react";
 import { AxiosError } from "axios";
-import clsx from "clsx";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { FaCheckCircle, FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ModalOrderOutside from "./modal-order-outside";

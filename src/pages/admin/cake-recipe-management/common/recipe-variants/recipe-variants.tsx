@@ -193,10 +193,9 @@ const RecipeVariants: React.FC<IRecipeVariantsProps> = ({ recipeVariants, setRec
                 </div>
                 <div className="mt-2 flex flex-col gap-2">
                   {v.variantItems.map((variantItem, childIndex) => {
-                    console.log(variantItem);
                     return (
                       <div className="flex w-full gap-x-2">
-                        <div className="grid grid-cols-4 gap-x-2">
+                        <div className="grid w-full max-w-[852px] grid-cols-4 gap-x-2">
                           <div className="col-span-2">
                             <Input
                               value={variantItem.itemLabel}
