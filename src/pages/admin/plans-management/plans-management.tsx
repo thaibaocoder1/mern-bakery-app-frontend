@@ -6,7 +6,6 @@ import iconConfig, { iconSize } from "@/config/icons/icon-config";
 import adminRoutes from "@/config/routes/admin-routes.config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
 import textSizes from "@/config/styles/text-size";
-import useCurrentBranch from "@/hooks/useCurrentBranch";
 import useStaffAxios from "@/hooks/useStaffAxios";
 import { TableColumnsPlan } from "@/pages/admin/branch-plans-management/columns";
 import { IAPIResponse, IPaginationMetadata } from "@/types/api-response";
@@ -32,14 +31,13 @@ import {
 import { AsyncListData, useAsyncList } from "@react-stately/data";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
-import { BiPlus, BiSearchAlt } from "react-icons/bi";
+import { BiSearchAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const PlanManagement = () => {
   const navigate = useNavigate();
   const axiosStaff = useStaffAxios();
-  const currentBranch = useCurrentBranch();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [idDelete, setIdDelete] = useState<string>("");
@@ -57,7 +55,7 @@ const PlanManagement = () => {
     return axiosStaff
       .get<
         IAPIResponse<IPlan[]>
-      >(apiRoutes.branches.getAllPlanForBranch(currentBranch), { params: { page: currentPage, noPagination, planType: currentType === "all" ? undefined : currentType, planStatus: currentStatus === "all" ? undefined : currentStatus } })
+      >(apiRoutes.plans.getAll, { params: { page: currentPage, noPagination, planType: currentType === "all" ? undefined : currentType, planStatus: currentStatus === "all" ? undefined : currentStatus } })
       .then((response) => response.data);
   };
 
@@ -73,9 +71,7 @@ const PlanManagement = () => {
           list.reload();
         }
       })
-      .catch((error: AxiosError) => {
-        toast.error("Kế hoạch có dữ liệu");
-      });
+      .catch((error: AxiosError) => toast.error((error.response?.data as IAPIResponseError).message));
   };
 
   const handleSearchChange = (searchString: string) => {
@@ -164,6 +160,7 @@ const PlanManagement = () => {
               onChange={setCurrentPage}
               className={"min-w-max"}
             />
+
             <Select
               label={"Loại kế hoạch:"}
               labelPlacement={"outside-left"}
@@ -181,6 +178,7 @@ const PlanManagement = () => {
               <SelectItem key={"day"}>{PlanType["day"]}</SelectItem>
               <SelectItem key={"week"}>{PlanType["week"]}</SelectItem>
             </Select>
+
             <Select
               label={"Trạng thái:"}
               labelPlacement={"outside-left"}
@@ -201,15 +199,6 @@ const PlanManagement = () => {
               <SelectItem key={"in_progress"}>{PlanStatus["in_progress"]}</SelectItem>
               <SelectItem key={"completed"}>{PlanStatus["completed"]}</SelectItem>
             </Select>
-            <Button
-              className={"w-full"}
-              size="lg"
-              color="primary"
-              startContent={<BiPlus size={iconSize.medium} />}
-              onClick={() => navigate(adminRoutes.branchPlan.create)}
-            >
-              Thêm mới
-            </Button>
           </div>
         </div>
         <Table
@@ -283,28 +272,9 @@ const PlanManagement = () => {
                       color={"secondary"}
                       isIconOnly
                       variant={"ghost"}
-                      onClick={() => navigate(adminRoutes.branchPlan.details(plan._id as string))}
+                      onClick={() => navigate(adminRoutes.plan.details(plan._id as string))}
                     >
                       {iconConfig.details.base}
-                    </Button>
-                    <Button
-                      color={"warning"}
-                      isIconOnly
-                      variant={"ghost"}
-                      onClick={() => navigate(adminRoutes.branchPlan.edit(plan._id as string))}
-                    >
-                      {iconConfig.edit.base}
-                    </Button>
-                    <Button
-                      color={"danger"}
-                      isIconOnly
-                      variant={"ghost"}
-                      onClick={() => {
-                        setIdDelete(plan._id as string);
-                        onOpen();
-                      }}
-                    >
-                      {iconConfig.delete.base}
                     </Button>
                   </div>
                 </TableCell>

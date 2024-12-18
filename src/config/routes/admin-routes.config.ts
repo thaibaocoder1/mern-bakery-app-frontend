@@ -66,6 +66,10 @@ const adminRoutes = {
     delete: (supplierId: string) => `${BASE_ADMIN_URL}/suppliers-management/${supplierId}`,
     details: (supplierId: string) => `${BASE_ADMIN_URL}/suppliers-management/${supplierId}`,
   },
+  plan: {
+    root: `${BASE_ADMIN_URL}/plans-management/`,
+    details: (planId: string) => `${BASE_ADMIN_URL}/plans-management/${planId}`,
+  },
   branchPlan: {
     root: `${BASE_ADMIN_URL}/branch-plans-management/`,
     create: `${BASE_ADMIN_URL}/branch-plans-management/create`,

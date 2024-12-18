@@ -93,15 +93,25 @@ const RequestDetails = (props: RequestDetailsProps) => {
     if (!requestId) {
       return;
     }
-    staffAxios
-      .patch(apiRoutes.importRequests.updateStatus(requestId), {
+
+    const toastPromise = toast.promise(
+      staffAxios.patch(apiRoutes.importRequests.updateStatus(requestId), {
         requestStatus,
-      })
-      .then((response) => response.data)
+      }),
+      {
+        pending: requestStatus === "confirmed" ? "Đang cập nhật và gửi email" : "Đang cập nhật trạng thái...",
+        success: "Cập nhật trạng thái thành công!",
+        error: "Cập nhật trạng thái thất bại!",
+      },
+    );
+    toastPromise
       .then((response) => {
-        if (response.status === "success") {
+        if (response.data.status === "success") {
           getRequestDetails();
         }
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật trạng thái:", error);
       });
   };
 

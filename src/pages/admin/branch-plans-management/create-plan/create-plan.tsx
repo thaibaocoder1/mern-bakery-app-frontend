@@ -65,6 +65,12 @@ const CreatePlan = () => {
     if (Object.values(payload).includes("")) {
       return toast.error("Vui lòng điền đủ thông tin");
     }
+    if (
+      typeof payload.planActivated?.startDate === "object" ||
+      typeof payload.planActivated?.endDate === "object"
+    ) {
+      return toast.error("Thời gian kiểu tuần là 1 tuần");
+    }
     staffAxios
       .post<IAPIResponse<IPlan>>(apiRoutes.plans.create, payload)
       .then((response) => response.data)
@@ -73,10 +79,11 @@ const CreatePlan = () => {
           toast.success(response.message);
           navigate(adminRoutes.branchPlan.root);
         }
+      })
+      .catch((error) => {
+        toast.error("Kế hoạch với tên này đã tồn tại");
       });
   };
-
-  console.log("plan", currentPlanType);
 
   return (
     <WrapperContainer>

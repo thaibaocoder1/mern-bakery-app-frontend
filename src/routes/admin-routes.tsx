@@ -3,6 +3,7 @@ import CakesManagement from "@/pages/admin/cakes-management";
 import ErrorPage from "@/pages/common/error";
 import adminPlanRoutes from "@/routes/admin/admin-plans/admin-plans";
 import { RouteObject } from "react-router-dom";
+import adminAnalyticsRoutes from "./admin/admin-analytics/admin-analytics";
 import adminBranchRoutes from "./admin/admin-branches/admin-branches";
 import adminCakeRecipeRoutes from "./admin/admin-cake-recipes/admin-cake-recipes";
 import adminCakesRoutes from "./admin/admin-cakes/admin-cakes";
@@ -15,7 +16,6 @@ import adminStaff from "./admin/admin-staff/admin-staff";
 import adminSupplierRoutes from "./admin/admin-suppliers/admin-suppliers";
 import adminUserRoutes from "./admin/admin-users/admin-users";
 import adminVoucherRoutes from "./admin/admin-vouchers/admin-vouchers";
-import adminAnalyticsRoutes from "./admin/admin-analytics/admin-analytics";
 
 const adminRoutes: RouteObject[] = [
   {

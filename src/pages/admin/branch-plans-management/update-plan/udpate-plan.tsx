@@ -66,6 +66,12 @@ const UpdatePlan = () => {
     if (Object.values(payload).includes("")) {
       return toast.error("Vui lòng điền đủ thông tin");
     }
+    if (
+      typeof payload.planActivated?.startDate === "object" ||
+      typeof payload.planActivated?.endDate === "object"
+    ) {
+      return toast.error("Thời gian kiểu tuần là 1 tuần");
+    }
     staffAxios
       .patch<IAPIResponse<IPlan>>(apiRoutes.plans.edit(planId), payload)
       .then((response) => response.data)

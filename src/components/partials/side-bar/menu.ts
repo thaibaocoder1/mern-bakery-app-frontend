@@ -31,13 +31,6 @@ const menuList: MenuList[] = [
     path: "analytics",
     minRequiredRole: [1, 2],
   },
-  // {
-  //   label: "Thông báo",
-  //   size: iconSize.medium,
-  //   icon: BiSolidBellRing,
-  //   path: "notifications",
-  //   minRequiredRole: [1, 2],
-  // },
   {
     label: "Khách hàng",
     size: iconSize.medium,
@@ -99,6 +92,13 @@ const menuList: MenuList[] = [
     size: iconSize.medium,
     icon: BiCartAlt,
     path: "orders-management",
+    minRequiredRole: [2],
+  },
+  {
+    label: "Kế hoạch",
+    size: iconSize.medium,
+    icon: GrPlan,
+    path: "plans-management",
     minRequiredRole: [2],
   },
   {
