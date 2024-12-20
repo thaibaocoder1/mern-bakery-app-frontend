@@ -18,7 +18,7 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BiSolidCart } from "react-icons/bi";
-import { FaSearch, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { FaRightToBracket } from "react-icons/fa6";
 import { Link, matchPath, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -40,7 +40,7 @@ const Header = () => {
     "totalQuantity",
   ]);
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const paths: string[] = ["/order-steps", "/profile/order/:orderId"];
+  const paths: string[] = ["/profile/order/:orderId"];
   const isMatchPath: boolean = paths.some((path) => matchPath(path, pathname));
   const { width } = useWindowSize();
 
@@ -160,7 +160,7 @@ const Header = () => {
           <NavLink
             to="cakes"
             className={({ isActive }) =>
-              cn("mr-8 w-full truncate text-lg leading-7", isActive ? "text-primary" : "text-inherit")
+              cn("mr-8 w-full text-lg leading-7", isActive ? "text-primary" : "text-inherit")
             }
           >
             <span className={`max-sm:text-[14px]`}>Menu bánh</span>
@@ -168,10 +168,7 @@ const Header = () => {
           <NavLink
             to="vouchers"
             className={({ isActive }) =>
-              cn(
-                "mr-8 w-full truncate text-lg leading-7 max-md:hidden",
-                isActive ? "text-primary" : "text-inherit",
-              )
+              cn("mr-8 w-full text-lg leading-7 max-md:hidden", isActive ? "text-primary" : "text-inherit")
             }
           >
             Khuyến mãi

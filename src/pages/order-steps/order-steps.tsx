@@ -622,8 +622,8 @@ const OrderSteps = () => {
               setOrderGroup={setOrderGroup}
             />
           )}
-          <div className="relative mx-auto flex w-[1280px] flex-col gap-4">
-            <div className={"mt-8 flex flex-col gap-4"}>
+          <div className="relative mx-auto flex max-w-7xl flex-col gap-4">
+            <div className={"mt-8 flex flex-col gap-4 max-sm:hidden"}>
               <ClientHeader title={"thanh toán đơn hàng"} />
               <div className="grid grid-cols-12 gap-x-4 rounded-2xl border bg-dark/10 px-4 py-2 text-dark">
                 <p className="col-span-6 font-bold">SẢN PHẨM </p>
@@ -653,7 +653,7 @@ const OrderSteps = () => {
                 applyOrderedPoints({ isCheckUsePoint, setIsCheckUsePoint, setOrderGroup, pointOfCustomer })
               }
             />
-            <div className="sticky bottom-4 z-50 flex gap-4 rounded-2xl border bg-white p-4 shadow-custom">
+            <div className="sticky bottom-4 z-50 flex gap-4 rounded-2xl border bg-white p-4 shadow-custom max-md:flex-col">
               <div className="flex w-full flex-col gap-2">
                 <div className={"flex items-center gap-2"}>
                   <Input
@@ -670,24 +670,28 @@ const OrderSteps = () => {
                     Chọn
                   </Button>
                 </div>
-                <div className={"flex items-center gap-2"}>
+                <div className={"flex gap-2 max-sm:flex-col sm:items-center"}>
                   <p className={"min-w-max"}>Phương thức thanh toán: </p>
-                  <ButtonGroup variant={"flat"}>
-                    <Button
-                      color={orderGroup.paymentStatus === "cashOnDelivery" ? "primary" : "default"}
-                      onClick={() => setOrderGroup((prev) => ({ ...prev, paymentStatus: "cashOnDelivery" }))}
-                      startContent={iconConfig.cashStack.base}
-                    >
-                      Thanh toán khi nhận hàng
-                    </Button>
-                    <Button
-                      color={orderGroup.paymentStatus === "pending" ? "primary" : "default"}
-                      onClick={() => setOrderGroup((prev) => ({ ...prev, paymentStatus: "pending" }))}
-                      startContent={<Image src={vnpayIcon} width={18} />}
-                    >
-                      VnPay
-                    </Button>
-                  </ButtonGroup>
+                  <div>
+                    <ButtonGroup variant={"flat"} className="">
+                      <Button
+                        color={orderGroup.paymentStatus === "cashOnDelivery" ? "primary" : "default"}
+                        onClick={() =>
+                          setOrderGroup((prev) => ({ ...prev, paymentStatus: "cashOnDelivery" }))
+                        }
+                        startContent={iconConfig.cashStack.base}
+                      >
+                        Thanh toán khi nhận hàng
+                      </Button>
+                      <Button
+                        color={orderGroup.paymentStatus === "pending" ? "primary" : "default"}
+                        onClick={() => setOrderGroup((prev) => ({ ...prev, paymentStatus: "pending" }))}
+                        startContent={<Image src={vnpayIcon} width={18} />}
+                      >
+                        VnPay
+                      </Button>
+                    </ButtonGroup>
+                  </div>
                 </div>
                 <OrderVoucher onOpenSystemVoucherChange={onOpenSystemVoucherChange} />
               </div>

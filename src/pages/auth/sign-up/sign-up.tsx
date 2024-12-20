@@ -127,10 +127,10 @@ const SignUp = () => {
   return (
     <section className="flex h-screen w-screen">
       <div className="relative flex h-full flex-col items-center justify-center rounded-r-xl max-sm:w-full max-sm:px-2 sm:min-w-[480px] sm:px-8 sm:shadow-xl">
-        <div className={"absolute z-0 h-full"}>
-          <div className={"mt-12 flex w-full justify-center"}>
+        <div className={"pointer-events-none absolute z-0 h-full select-none"}>
+          <div className={"mt-12 flex w-full justify-center max-md:opacity-40"}>
             <Link to={"/"}>
-              <Image src={imageAn} />
+              <Image src={imageAn} className="max-md:max-w-44" />
             </Link>
           </div>
         </div>

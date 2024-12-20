@@ -1,13 +1,12 @@
+import useWindowSize from "@/hooks/useWindowSize";
 import { ICake, ICakeVariant } from "@/types/cake";
 import { IUserCart, TSelectedVariant } from "@/types/cart";
 import { IOrderGroupForm, TDeliveryMethod } from "@/types/order";
 import { IDecodedUrlParams } from "@/types/voucher";
-import { displayImage } from "@/utils/display-image";
 import { calculateDiscountPrice, formatCurrencyVND } from "@/utils/money-format";
 import { Button, DatePicker, DateValue, Divider, Image, Input, Switch, Tooltip } from "@nextui-org/react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 interface OrderItemsProps {
   cartCustomer: IUserCart[];
@@ -49,6 +48,7 @@ const OrderItems = ({
   totalBranch,
 }: OrderItemsProps) => {
   const [activeVoucherCode, setActiveVoucherCode] = useState<IVoucherCodeBranchValue>();
+  const { width } = useWindowSize();
   const urlParams = new URLSearchParams(window.location.search);
   const voucherCodeBranch = urlParams.get("voucherCodeBranch");
   const handleReceiveInStore = (checked: boolean, branchId: string) => {
@@ -173,7 +173,7 @@ const OrderItems = ({
 
         return (
           <div className="flex flex-col gap-2 rounded-2xl border p-4 shadow-custom" key={index}>
-            <h6 className={"text-g w-max rounded-xl bg-default/50 px-4 py-1 font-bold"}>
+            <h6 className={"text-g w-max rounded-xl bg-default/50 px-4 py-1 font-bold max-sm:text-sm"}>
               {showBranchName(branchCart.branchId)}
             </h6>
             <div className="flex flex-col gap-y-2">
@@ -183,32 +183,30 @@ const OrderItems = ({
                   cake.cakeInfo?.cakeVariants || [],
                 );
                 return (
-                  <div className="grid grid-cols-12 items-center gap-4" key={index}>
-                    <div className={"col-span-6 flex items-center gap-4"}>
+                  <div className="grid grid-cols-12 items-center sm:gap-4" key={index}>
+                    <div className={"col-span-6 flex items-center max-sm:gap-2 sm:gap-4"}>
                       <div className={"aspect-square h-24 w-24"}>
                         <Image
-                          src={displayImage(
-                            (cake.cakeInfo as ICake).cakeThumbnail,
-                            (cake.cakeInfo as ICake)._id,
-                          )}
+                          src={`http://localhost:3000/images/${cake?.cakeInfo?._id}/${cake.cakeInfo?.cakeThumbnail}`}
                           alt="Error"
+                          className="max-sm:h-[80px] max-sm:w-[80px]"
                         />
                       </div>
                       <div className="w-full overflow-hidden">
-                        <h5>{cake.cakeInfo?.cakeName}</h5>
+                        <h5 className="w-full truncate max-sm:text-xs">{cake.cakeInfo?.cakeName}</h5>
                         <Tooltip color="primary" content={selectedVariantsLength}>
-                          <p className="mt-2 truncate">{selectedVariantsLength}</p>
+                          <p className="mt-2 truncate max-sm:text-sm">{selectedVariantsLength}</p>
                         </Tooltip>
                       </div>
                     </div>
-                    <h5 className="col-span-2 text-center">
+                    <h5 className="col-span-2 text-center max-sm:text-sm">
                       {formatCurrencyVND(
                         (cake.cakeInfo as ICake).cakeDefaultPrice,
                         (cake.cakeInfo as ICake).discountPercents,
                       )}
                     </h5>
-                    <h5 className="col-span-2 text-center">x{cake.quantity}</h5>
-                    <h5 className="col-span-2 text-center text-danger">
+                    <h5 className="col-span-2 text-center max-sm:text-sm">x{cake.quantity}</h5>
+                    <h5 className="col-span-2 text-center text-danger max-sm:text-sm">
                       {handlePrice(
                         calculateDiscountPrice(
                           (cake.cakeInfo as ICake).cakeDefaultPrice,
@@ -224,10 +222,10 @@ const OrderItems = ({
               })}
             </div>
             <Divider />
-            <div className="flex gap-4 px-2 py-4">
+            <div className="flex gap-4 px-2 py-4 max-sm:flex-col max-sm:gap-y-2">
               <Input
                 variant="bordered"
-                size="lg"
+                size={width > 576 ? "lg" : "md"}
                 placeholder="Nhập ghi chú ..."
                 label={"Ghi chú cho cửa hàng:"}
                 labelPlacement={"outside"}
@@ -257,7 +255,7 @@ const OrderItems = ({
               </div>
               <div className="flex w-full items-end gap-2">
                 <Input
-                  size="lg"
+                  size={width > 576 ? "lg" : "md"}
                   placeholder="Bạn chưa chọn mã giảm giá nào"
                   label={"Mã giảm giá"}
                   labelPlacement={"outside"}
@@ -271,7 +269,7 @@ const OrderItems = ({
                 />
                 <Button
                   color="primary"
-                  size={"lg"}
+                  size={width > 576 ? "lg" : "md"}
                   onPress={() => {
                     setVoucherBranchId(branchCart.branchId);
                     onOpenBranchVoucherChange();
@@ -282,7 +280,7 @@ const OrderItems = ({
               </div>
             </div>
             <Divider />
-            <div className="flex items-stretch justify-between p-2">
+            <div className="flex items-stretch justify-between p-2 max-sm:flex-col max-sm:gap-y-2">
               <div className="flex flex-col items-stretch justify-between">
                 <div className="flex flex-col gap-y-2">
                   <div className="">
@@ -298,6 +296,7 @@ const OrderItems = ({
                       onValueChange={() => {
                         handleChooseExpressDelivery(branchCart.branchId);
                       }}
+                      size={width > 576 ? "md" : "sm"}
                       color="secondary"
                     >
                       Giao hỏa tốc
@@ -355,18 +354,19 @@ const OrderItems = ({
                       JSON.parse(atob(voucherCodeBranch || ""))[branchCart.branchId]?.type === "shipFee"
                     )
                   }
+                  size={width > 576 ? "md" : "sm"}
                   onValueChange={(e) => handleReceiveInStore(e, branchCart.branchId)}
                 >
                   Nhận tại cửa hàng
                 </Switch>
               </div>
-              <div className="flex min-w-96 flex-col gap-4">
+              <div className="flex flex-col max-sm:gap-y-2 sm:min-w-96 sm:gap-4">
                 <div className="flex w-full items-center justify-between">
-                  <p className={"font-bold text-dark/50"}>TẠM TÍNH ĐƠN HÀNG:</p>
+                  <p className={"font-bold text-dark/50 max-sm:text-[14px]"}>TẠM TÍNH ĐƠN HÀNG:</p>
                   <p className={"text-lg font-bold"}>{formatCurrencyVND(totalBranch(branchCart.branchId))}</p>
                 </div>
                 <div className="flex w-full items-center justify-between">
-                  <p className={"font-bold text-dark/50"}>PHÍ VẬN CHUYỂN:</p>
+                  <p className={"font-bold text-dark/50 max-sm:text-[14px]"}>PHÍ VẬN CHUYỂN:</p>
                   <p className={"text-lg font-bold"}>
                     {formatCurrencyVND(
                       orderGroup.orderData.find((orderData) => orderData.branchId === branchCart.branchId)
@@ -375,7 +375,7 @@ const OrderItems = ({
                   </p>
                 </div>
                 <div className="flex w-full items-center justify-between">
-                  <p className={"font-bold text-dark/50"}>GIẢM GIÁ:</p>
+                  <p className={"font-bold text-dark/50 max-sm:text-[14px]"}>GIẢM GIÁ:</p>
                   <p
                     className={clsx("text-lg font-bold", {
                       "text-primary": totalDiscountBranchVoucher(branchCart.branchId) > 0,
@@ -386,7 +386,7 @@ const OrderItems = ({
                   </p>
                 </div>
                 <div className="flex w-full items-center justify-between">
-                  <h5 className="text-lg font-bold text-dark">TỔNG THANH TOÁN:</h5>
+                  <h5 className="text-lg font-bold text-dark max-sm:text-[14px]">TỔNG THANH TOÁN:</h5>
                   <h4 className="text-primary">
                     {formatCurrencyVND(
                       orderGroup.orderData.find((orderData) => orderData.branchId === branchCart.branchId)
