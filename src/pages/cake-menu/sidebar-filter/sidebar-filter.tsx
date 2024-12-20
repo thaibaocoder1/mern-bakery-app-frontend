@@ -72,7 +72,6 @@ const SidebarFilter = ({
   };
 
   const handlePriceChange = (value: string) => {
-    console.log(value);
     const [min, max] = value.split("-").map(Number);
     setSelectedPrice((prev) => {
       const newValue = prev === value ? null : value;

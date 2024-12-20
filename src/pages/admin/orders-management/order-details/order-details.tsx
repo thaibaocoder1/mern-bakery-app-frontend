@@ -530,6 +530,8 @@ const OrderDetails = ({ refBack }: OrderDetailsProps) => {
             customerOrderInfo={orderDetail?.orderGroupId.customerInfo}
             orderPaymentMethod={orderDetail?.orderGroupId.paymentStatus}
             orderNote={orderDetail?.orderNote}
+            orderStatus={orderDetail?.orderStatus}
+            explainReason={orderDetail?.explainReason}
           />
           <div className={cn("grid gap-x-2", currentButtons.length > 1 ? "grid-cols-2" : "grid-cols-1")}>
             {currentButtons.map((btn: ButtonConfig, index: number) => (

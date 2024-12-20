@@ -32,8 +32,7 @@ export interface ICakeBaseInfor {
 }
 
 export interface ICakeRate {
-  // [x: string]: number;
-  userId?: string | ICustomer;
+  customerId?: string | ICustomer;
   rateContent: string;
   rateStars: number;
   isHide?: boolean;

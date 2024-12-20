@@ -9,11 +9,11 @@ const FeedbackCustomers = () => (
     <div className="mx-auto flex items-center justify-center gap-8">
       <FaChevronLeft size={iconSize.large} className="text-danger-50 hover:cursor-pointer max-md:size-16" />
       <div className="w-[700px] rounded-2xl shadow-2xl">
-        <h3 className="pb-11 pt-7 text-center text-primary max-sm:text-2xl">devsnake</h3>
+        <h3 className="pb-11 pt-7 text-center text-primary max-sm:text-2xl">DEV Team AnBakery</h3>
         <p className="mx-8 text-justify text-base max-sm:text-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat perferendis nostrum laboriosam
-          voluptates natus vitae, ducimus dolorum? Consequatur natus possimus odit labore numquam tempora
-          magnam praesentium
+          Sản phẩm rất tốt, chất lượng tuyệt vời, giá cả hợp lý, nhân viên phục vụ nhiệt tình, chu đáo, sẽ ủng
+          hộ thêm. Vị Bánh ngon, thơm, mềm, ngọt vừa phải, không quá ngấy, không quá ngọt, không quá, và có
+          nhiều hương vị khác nhau, rất phong phú.
         </p>
         <p className="mt-16 pb-8 text-center text-base text-default-300">21:00 - 02/08/2024</p>
       </div>

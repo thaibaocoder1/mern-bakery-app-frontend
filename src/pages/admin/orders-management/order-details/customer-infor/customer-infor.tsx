@@ -9,11 +9,15 @@ interface CustomerInforProps {
   customerOrderInfo?: ICustomerInfo;
   orderPaymentMethod?: TPaymentStatus;
   orderNote?: string;
+  orderStatus?: string;
+  explainReason?: string;
 }
 const CustomerInfor: React.FC<CustomerInforProps> = ({
   customerOrderInfo,
   orderPaymentMethod,
   orderNote,
+  orderStatus,
+  explainReason,
 }) => {
   if (!customerOrderInfo) return <></>;
 
@@ -69,6 +73,23 @@ const CustomerInfor: React.FC<CustomerInforProps> = ({
             isReadOnly
           />
         </div>
+        {(orderStatus === "cancelled" || orderStatus === "returned") && (
+          <>
+            <Divider className={"my-2"} />
+            <div className="flex flex-col gap-1">
+              <Input
+                classNames={{
+                  label: "font-bold text-base uppercase !text-dark/50",
+                }}
+                value={explainReason}
+                label={"Lý do huỷ"}
+                labelPlacement={"outside"}
+                size={"lg"}
+                isReadOnly
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

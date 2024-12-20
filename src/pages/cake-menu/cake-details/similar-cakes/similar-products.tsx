@@ -36,7 +36,7 @@ const SimilarProducts = ({ cakeId }: SimilarProductsProps) => {
   }, []);
   return (
     <div className="max-w-full overflow-hidden">
-      <h1 className="mb-8 mt-20 text-center text-default-300 max-md:text-6xl max-sm:text-3xl">
+      <h1 className="mb-8 mt-20 text-center text-default-300 max-lg:text-6xl max-md:text-5xl max-sm:mt-10">
         CÁC MẪU BÁNH CÙNG LOẠI
       </h1>
       <Slider {...settings}>

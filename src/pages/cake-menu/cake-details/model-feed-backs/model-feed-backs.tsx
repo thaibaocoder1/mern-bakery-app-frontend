@@ -1,6 +1,7 @@
 import { iconSize } from "@/config/icons/icon-config";
 import textSizes from "@/config/styles/text-size";
 import { ICakeRate } from "@/types/cake";
+import { ICustomer } from "@/types/customer";
 import { formatDate } from "@/utils/format-date";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
 import clsx from "clsx";
@@ -27,7 +28,9 @@ const ModelFeedBacks = ({ isOpen, onOpenChange, cakeRates }: ModelFeedBacksProps
                       <div className="flex gap-2">
                         <div className="size-[50px] rounded-full bg-default-300"></div>
                         <div>
-                          <p className={`${textSizes.base} font-bold`}>Ẩn danh</p>
+                          <p className={`${textSizes.base} font-bold`}>
+                            {(rate.customerId as ICustomer).userName}
+                          </p>
                           <span className={`${textSizes.sm} text-default-300`}>
                             {formatDate(rate.createdAt as string)}
                           </span>

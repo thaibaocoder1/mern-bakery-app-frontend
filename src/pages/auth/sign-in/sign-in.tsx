@@ -3,7 +3,7 @@ import logoAnbakery from "@/assets/images/WithSloganColorful.png";
 import EyeFilledIcon from "@/components/common/eye-filled-icon/eye-filled-icon";
 import EyeSlashFilledIcon from "@/components/common/eye-slash-filled-icon";
 import { signInWithFacebookPopup, signInWithGooglePopup } from "@/config/firebase/firebase.config";
-import iconConfig, { iconSize } from "@/config/icons/icon-config";
+import iconConfig from "@/config/icons/icon-config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
 import clientRoutes from "@/config/routes/client-routes.config";
 import useAxios from "@/hooks/useAxios";
@@ -14,15 +14,12 @@ import validateEmail from "@/utils/validate-email";
 import { Button, Divider, Image, Input } from "@nextui-org/react";
 import { FormEvent, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
-import { FaFacebook } from "react-icons/fa";
-import { FaGoogle } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const SignIn = () => {
   const axiosClient = useAxios();
-  const navigate = useNavigate();
-
   const [emailFocused, setEmailFocused] = useState<boolean>(false);
   const [passwordFocused, setPasswordFocused] = useState<boolean>(false);
 
@@ -71,8 +68,6 @@ const SignIn = () => {
   };
 
   const handleLoginWithProvider = (provider: string) => {
-    console.log(provider);
-
     const signInMethod = provider === "google" ? signInWithGooglePopup : signInWithFacebookPopup;
 
     signInMethod().then((response) => {
@@ -123,7 +118,7 @@ const SignIn = () => {
   return (
     <>
       <section className="flex h-screen w-screen items-center">
-        <div className="relative flex h-full min-w-[480px] flex-col items-center justify-center rounded-r-xl px-8 shadow-xl">
+        <div className="relative flex h-full flex-col items-center justify-center rounded-r-xl max-sm:w-full max-sm:px-2 sm:min-w-[480px] sm:px-8 sm:shadow-xl">
           <div className={"absolute z-0 h-full"}>
             <div className={"mt-12 flex w-full justify-center"}>
               <Link to={"/"}>
@@ -134,7 +129,7 @@ const SignIn = () => {
 
           <div className="z-10 flex w-full flex-col items-center justify-center gap-4">
             <form className="flex w-full flex-col gap-4 max-[1450px]:px-4" onSubmit={handleLogin}>
-              <h2 className="truncate">Đăng nhập</h2>
+              <h2 className="truncate max-sm:text-2xl">Đăng nhập</h2>
               <Input
                 className="w-full"
                 variant={"bordered"}
@@ -182,18 +177,18 @@ const SignIn = () => {
               <Button color={"primary"} type={"submit"} fullWidth={true} size={"lg"}>
                 Đăng nhập
               </Button>
-              <div className={"flex w-full items-center justify-between gap-8"}>
+              <div className={"flex w-full items-center justify-between gap-8 overflow-hidden"}>
                 <Link
                   to={clientRoutes.auth.signUp}
                   className={"transition-all duration-300 hover:text-primary"}
                 >
-                  <p>Chưa có tài khoản? Đăng kí ngay</p>
+                  <p className="truncate max-sm:text-sm">Chưa có tài khoản? Đăng kí ngay</p>
                 </Link>
                 <Link
                   to={clientRoutes.auth.forgotPassword}
-                  className={"transition-allduration-300 hover:text-primary"}
+                  className={"transition-allduration-300 hover:text-primary max-sm:text-sm"}
                 >
-                  <p>Quên mật khẩu</p>
+                  <p className="w-full truncate max-sm:text-sm">Quên mật khẩu</p>
                 </Link>
               </div>
             </form>
@@ -215,7 +210,7 @@ const SignIn = () => {
           </div>
         </div>
 
-        <div className="flex w-full items-center justify-center">
+        <div className="hidden w-full items-center justify-center sm:flex">
           <Image src={logoAnbakery} className="max-[1450px]:px-8 max-lg:hidden" />
         </div>
       </section>

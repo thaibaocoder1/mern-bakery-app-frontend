@@ -39,9 +39,9 @@ const Header = () => {
     "totalQuantity",
   ]);
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const paths: string[] = ["/cart", "/order-steps", "/profile/order/:orderId"];
+  const paths: string[] = ["/order-steps", "/profile/order/:orderId"];
   const isMatchPath: boolean = paths.some((path) => matchPath(path, pathname));
-  const { width, height } = useWindowSize();
+  const { width } = useWindowSize();
 
   const handleSearch = () => {
     if (searchInput === "") {
@@ -121,8 +121,6 @@ const Header = () => {
     navigate(clientRoutes.auth.signIn);
   };
   const handleRedirectToCart = () => {
-    console.log("redirect to cart !");
-    // navigate(clientRoutes.cart.root)
     axiosCustomer
       .get<IAPIResponse>(apiRoutes.customers.me.cart)
       .then((resposne) => resposne.data)
@@ -145,7 +143,7 @@ const Header = () => {
     <header className={clsx("w-full", { "shadow-sm": width >= 1300 })}>
       <nav
         className={clsx(
-          "relative mx-auto flex items-center justify-between py-4 max-xl:px-2 max-lg:px-6 max-sm:px-2",
+          "relative mx-auto flex items-center justify-between py-4 transition-all max-xl:px-2 max-lg:px-6 max-sm:px-2",
           {
             "w-[1280px] shadow-sm": isMatchPath && width < 1300,
             "max-w-7xl": width >= 1300,
@@ -159,7 +157,7 @@ const Header = () => {
               cn("mr-8 w-full truncate text-lg leading-7", isActive ? "text-primary" : "text-inherit")
             }
           >
-            Menu bánh
+            <span className={`max-sm:text-[14px]`}>Menu bánh</span>
           </NavLink>
           <NavLink
             to="vouchers"
@@ -177,10 +175,10 @@ const Header = () => {
           <Image
             alt="logo"
             src={logo}
-            className={clsx("w-[250px]", { "max-lg:max-w-56 max-sm:hidden": !paths.includes(pathname) })}
+            className={clsx("w-[250px]", { "max-lg:max-w-56 max-sm:max-w-40": !paths.includes(pathname) })}
           />
         </Link>
-        <div className="flex gap-x-2">
+        <div className="inline-flex w-max items-center max-sm:gap-x-1 sm:gap-x-2 md:gap-x-4">
           {isLogin ? (
             <>
               <Button
@@ -196,7 +194,7 @@ const Header = () => {
               </Button>
               <Button
                 variant="flat"
-                size="md"
+                size={width <= 390 ? "sm" : "md"}
                 radius="full"
                 color="primary"
                 startContent={iconConfig.user.small}
@@ -209,10 +207,11 @@ const Header = () => {
             <>
               <Button
                 variant="light"
-                size="md"
+                size={width <= 390 ? "sm" : "md"}
                 radius="full"
                 color="primary"
                 onClick={() => navigate(clientRoutes.auth.signUp)}
+                className="max-md:hidden"
               >
                 Đăng kí
               </Button>
@@ -220,7 +219,7 @@ const Header = () => {
                 radius="full"
                 variant="flat"
                 color="primary"
-                size="md"
+                size={width <= 390 ? "sm" : "md"}
                 startContent={<FaRightToBracket />}
                 onClick={handleSignIn}
               >
@@ -228,8 +227,9 @@ const Header = () => {
               </Button>
             </>
           )}
+
           <Button
-            size="md"
+            size={width <= 390 ? "sm" : "md"}
             radius="full"
             color={isShowSearch ? "danger" : "primary"}
             isIconOnly
@@ -244,16 +244,17 @@ const Header = () => {
               return setIsShowSearch(!isShowSearch);
             }}
           />
+
           <Badge
             content={cookies.totalQuantity || 0}
             color="primary"
-            size="md"
+            size={width <= 390 ? "sm" : "md"}
             shape="circle"
             placement="top-right"
           >
             <Button
               variant="flat"
-              size="md"
+              size={width <= 390 ? "sm" : "md"}
               radius="full"
               color="primary"
               startContent={<BiSolidCart size={16} />}

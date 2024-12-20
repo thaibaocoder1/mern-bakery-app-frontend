@@ -1,9 +1,11 @@
 import { apiRoutes } from "@/config/routes/api-routes.config";
 
+import ClientHeader from "@/components/client/client-header";
 import LoadingClient from "@/components/common/loading-client";
 import iconConfig from "@/config/icons/icon-config";
 import clientRoutes from "@/config/routes/client-routes.config";
 import useCustomerAxios from "@/hooks/useCustomerAxios";
+import useWindowSize from "@/hooks/useWindowSize";
 import { IDistrict, IProvince, IWard } from "@/types/api-address";
 import { IAPIResponse } from "@/types/api-response";
 import { IUserAddresses } from "@/types/customer";
@@ -14,11 +16,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import ClientHeader from "@/components/client/client-header";
-
 const AddAddress = () => {
   const navigate = useNavigate();
   const axiosCustomer = useCustomerAxios();
+  const { width } = useWindowSize();
   const [provinces, setProvinces] = useState<IProvince[]>([]);
   const [districts, setDistricts] = useState<IDistrict[]>([]);
   const [wards, setWards] = useState<IWard[]>([]);
@@ -34,9 +35,11 @@ const AddAddress = () => {
   });
   useEffect(() => {
     axios
-      .get(apiRoutes.locationAPI.provinces)
-      .then((response) => response.data)
-      .then(({ results }) => setProvinces(results))
+      .get(`${apiRoutes.locationAPI}`)
+      .then((response) => {
+        const provincesData = response.data.results;
+        setProvinces(provincesData);
+      })
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));
   }, []);
@@ -58,11 +61,8 @@ const AddAddress = () => {
       };
     });
 
-    axios
-      .get(apiRoutes.locationAPI.district(value))
-      .then((response) => response.data)
-      .then(({ results }) => setDistricts(results))
-      .catch((error) => console.error(error));
+    const districtsData = selectedProvince.districts;
+    setDistricts(districtsData);
   };
 
   const handleDistrictChange = (value: string) => {
@@ -81,11 +81,8 @@ const AddAddress = () => {
       };
     });
 
-    axios
-      .get(apiRoutes.locationAPI.ward(value))
-      .then((response) => response.data)
-      .then(({ results }) => setWards(results))
-      .catch((error) => console.error(error));
+    const wardsData = selectedDistrict.wards;
+    setWards(wardsData);
   };
 
   const handleWardChange = (value: string) => {
@@ -126,7 +123,7 @@ const AddAddress = () => {
       return toast.error("Số điện thoại không đúng định dạng.");
     }
     const fullAddressValid = addressForm.fullAddress.split(", ").map((str) => str.trim());
-    if (fullAddressValid.length < 4 || fullAddressValid.includes("")) {
+    if (fullAddressValid.includes("")) {
       return toast.error("Vui lòng chọn địa chỉ cụ thể.");
     }
     if (/\d/.test(fullName)) {
@@ -144,27 +141,7 @@ const AddAddress = () => {
       })
       .catch((error) => console.error(error));
   };
-  useEffect(() => {
-    if (addressForm.provinceId && addressForm.districtId) {
-      const fetchDistricts = axios
-        .get(apiRoutes.locationAPI.district(addressForm.provinceId as string))
-        .then((response) => response.data);
-      const fetchWards = fetchDistricts.then(() =>
-        axios
-          .get(apiRoutes.locationAPI.ward(addressForm.districtId as string))
-          .then((response) => response.data),
-      );
-      Promise.all([fetchDistricts, fetchWards])
-        .then(([districtData, wardData]) => {
-          setDistricts(districtData.results);
-          setWards(wardData.results);
-        })
-        .catch((error) => console.error(error))
-        .finally(() => setIsLoading(false));
-    } else {
-      setWards([]);
-    }
-  }, [addressForm.provinceId, addressForm.districtId]);
+
   if (isLoading) return <LoadingClient />;
 
   return (
@@ -178,7 +155,7 @@ const AddAddress = () => {
               label="Tên người nhận"
               placeholder="Nhập tên người nhận"
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
             />
             <Input
@@ -187,7 +164,7 @@ const AddAddress = () => {
               label="Email"
               placeholder="Nhập email "
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
             />
             <Input
@@ -195,7 +172,7 @@ const AddAddress = () => {
               label="Số điện thoại"
               placeholder="Nhập số điện thoại "
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
             />
           </div>
@@ -205,7 +182,7 @@ const AddAddress = () => {
               label="Địa chỉ đầy đủ (điền bằng form bên dưới)"
               placeholder="_,_,_,_"
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
               value={addressForm.fullAddress}
               isReadOnly
@@ -218,7 +195,7 @@ const AddAddress = () => {
               labelPlacement="outside"
               placeholder="Chọn tỉnh/Thành phố"
               variant="bordered"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               className="grow basis-72"
               onSelectionChange={(e) => handleProvinceChange(Array.from(e).join(""))}
             >
@@ -231,7 +208,7 @@ const AddAddress = () => {
               labelPlacement="outside"
               placeholder="Chọn Huyện"
               variant="bordered"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               className="grow basis-72"
               onSelectionChange={(e) => handleDistrictChange(Array.from(e).join(""))}
             >
@@ -245,7 +222,7 @@ const AddAddress = () => {
               labelPlacement="outside"
               placeholder="Chọn Xã"
               variant="bordered"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               onSelectionChange={(e) => handleWardChange(Array.from(e).join(""))}
             >
               {wards.map((ward) => (
@@ -260,13 +237,13 @@ const AddAddress = () => {
               placeholder="Nhập địa chỉ cụ thể."
               onValueChange={handleFullAddressChange}
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
             />
           </div>
           <Button
             color="primary"
-            size={"lg"}
+            size={width < 640 ? "md" : "lg"}
             startContent={iconConfig.add.base}
             onClick={handleCreateAddress}
           >

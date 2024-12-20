@@ -1,8 +1,10 @@
+import ClientHeader from "@/components/client/client-header";
 import LoadingClient from "@/components/common/loading-client";
 import iconConfig from "@/config/icons/icon-config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
 import clientRoutes from "@/config/routes/client-routes.config";
 import useCustomerAxios from "@/hooks/useCustomerAxios";
+import useWindowSize from "@/hooks/useWindowSize";
 import { IDistrict, IProvince, IWard } from "@/types/api-address";
 import { IAPIResponse } from "@/types/api-response";
 import { ICustomer, IUserAddresses } from "@/types/customer";
@@ -13,10 +15,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import ClientHeader from "@/components/client/client-header";
 
 const EditAddress = () => {
   const navigate = useNavigate();
+  const { width } = useWindowSize();
   const axiosCustomer = useCustomerAxios();
   const { addressId } = useParams();
   const [provinces, setProvinces] = useState<IProvince[]>([]);
@@ -194,7 +196,7 @@ const EditAddress = () => {
               label="Tên người nhận"
               placeholder="Nhập tên người nhận"
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
               className="grow basis-72"
             />
@@ -205,7 +207,7 @@ const EditAddress = () => {
               label="Email"
               placeholder="Nhập email"
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               className="grow basis-72"
               variant="bordered"
             />
@@ -215,7 +217,7 @@ const EditAddress = () => {
               label="Số điện thoại"
               placeholder="Nhập số điện thoại"
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               className="grow basis-72"
               variant="bordered"
             />
@@ -226,7 +228,7 @@ const EditAddress = () => {
               label="Địa chỉ đầy đủ (điền bằng form bên dưới)"
               placeholder="_,_,_,_"
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
               value={addressForm.fullAddress}
               isReadOnly
@@ -239,7 +241,7 @@ const EditAddress = () => {
               labelPlacement="outside"
               placeholder="Chọn tỉnh/Thành phố"
               variant="bordered"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               className="grow basis-72"
               selectedKeys={[addressForm?.provinceId as string]}
               onSelectionChange={(e) => handleProvinceChange(Array.from(e).join(""))}
@@ -255,7 +257,7 @@ const EditAddress = () => {
               labelPlacement="outside"
               placeholder="Chọn Huyện"
               variant="bordered"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               className="grow basis-72"
               selectedKeys={[addressForm?.districtId as string]}
               onSelectionChange={(e) => handleDistrictChange(Array.from(e).join(""))}
@@ -272,7 +274,7 @@ const EditAddress = () => {
               labelPlacement="outside"
               placeholder="Chọn Xã"
               variant="bordered"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               selectedKeys={[addressForm?.wardId as string]}
               onSelectionChange={(e) => handleWardChange(Array.from(e).join(""))}
             >
@@ -289,13 +291,18 @@ const EditAddress = () => {
               label="Địa chỉ cụ thể"
               placeholder="Nhập địa chỉ cụ thể."
               labelPlacement="outside"
-              size="lg"
+              size={width < 640 ? "md" : "lg"}
               variant="bordered"
               value={addressForm?.fullAddress.split(",")[0]}
               onValueChange={handleFullAddressChange}
             />
           </div>
-          <Button size={"lg"} color="primary" startContent={iconConfig.edit.base} onClick={handleEditAddress}>
+          <Button
+            size={width < 640 ? "md" : "lg"}
+            color="primary"
+            startContent={iconConfig.edit.base}
+            onClick={handleEditAddress}
+          >
             Lưu thay đổi
           </Button>
         </div>

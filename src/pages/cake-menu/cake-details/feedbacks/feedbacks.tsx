@@ -7,6 +7,7 @@ import { ICakeRate } from "@/types/cake";
 import { formatDate } from "@/utils/format-date";
 import { useMemo, useState } from "react";
 import clsx from "clsx";
+import { ICustomer } from "@/types/customer";
 interface IFeedbacksProps {
   cakeRates: ICakeRate[];
   onOpenChange: () => void;
@@ -29,6 +30,7 @@ const Feedbacks = ({ cakeRates, onOpenChange }: IFeedbacksProps) => {
     fiveStar: cakeRates.filter((rate) => rate.rateStars === 5).length,
   });
   const averageRating = cakeRates.reduce((sum, rate) => sum + rate.rateStars, 0) / cakeRates.length || 0;
+  console.log("items", items);
   return (
     <div className="w-full rounded-2xl border py-2 max-lg:mt-2 max-lg:px-2 lg:px-4">
       <div className="flex items-center justify-between">
@@ -100,9 +102,9 @@ const Feedbacks = ({ cakeRates, onOpenChange }: IFeedbacksProps) => {
             <div className="rounded-lg border p-4" key={index}>
               <div className="flex justify-between">
                 <div className="flex gap-2">
-                  <div className="size-[50px] rounded-full bg-default-300"></div>
+                  <div className="size-[50px] rounded-full bg-default-300" />
                   <div>
-                    <p className={`${textSizes.base} font-bold`}>Ẩn danh</p>
+                    <p className={`${textSizes.base} font-bold`}>{(rate.customerId as ICustomer).userName}</p>
                     <span className={`${textSizes.sm} text-default-300`}>
                       {formatDate(rate.createdAt as string)}
                     </span>

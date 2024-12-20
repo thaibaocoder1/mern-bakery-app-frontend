@@ -147,7 +147,7 @@ const CakeCard = ({ cakeData, isShowUtils = true }: CakeDetailsProps) => {
               src={displayImage(cakeData.cakeThumbnail, cakeData._id)}
               fallbackSrc="https://placehold.co/400"
               alt={slugify(cakeData.cakeName)}
-              className="size-[268px] object-center p-4 hover:scale-90"
+              className="size-[268px] object-contain p-4 hover:scale-90"
             />
           </div>
         </div>

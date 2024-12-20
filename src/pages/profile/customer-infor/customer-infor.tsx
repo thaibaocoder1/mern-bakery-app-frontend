@@ -2,6 +2,7 @@ import vippoint from "@/assets/images/vippoint.png";
 import iconConfig from "@/config/icons/icon-config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
 import useCustomerAxios from "@/hooks/useCustomerAxios";
+import useWindowSize from "@/hooks/useWindowSize";
 
 import { IAPIResponse } from "@/types/api-response";
 import { IChangePasswordForm, ICustomer } from "@/types/customer";
@@ -39,7 +40,7 @@ const CustomerInfor = ({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const customerAxios = useCustomerAxios();
-
+  const { width, height } = useWindowSize();
   const [editingMode, setEditingMode] = useState<boolean>(false);
   const [changePasswordForm, setChangePasswordForm] = useState<IChangePasswordForm>({
     oldPassword: "",
@@ -101,14 +102,18 @@ const CustomerInfor = ({
     <>
       <div className="flex items-start gap-4 rounded-2xl border p-4 shadow-custom">
         <div className={"w-max"}>
-          <Avatar className="size-[82px]" name={customerInfo.userName.slice(0, 3)} size="lg" />
+          <Avatar
+            className="size-[82px]"
+            name={customerInfo.userName.slice(0, 3)}
+            size={width < 768 ? "md" : "lg"}
+          />
         </div>
         <div className="flex w-full justify-between">
           <div className="flex flex-col gap-4">
             <div>
               <div className={"flex items-center gap-2"}>
                 <h5>{customerInfo?.userName}</h5>
-                <Chip variant={"flat"} color={"success"}>
+                <Chip variant={"flat"} color={"success"} size={width < 768 ? "sm" : "md"}>
                   Thành viên
                 </Chip>
 
@@ -116,16 +121,18 @@ const CustomerInfor = ({
               </div>
               <p className="small italic text-dark/50">{customerInfo?.email}</p>
             </div>
-            <div className={"flex items-center gap-1"}>
-              <p className={"small italic text-dark/50"}>Tham gia hệ thống từ ngày</p>
-              <p className={"font-semibold italic text-dark"}>
+            <div className={"flex items-center overflow-hidden"}>
+              <p className={"small truncate italic text-dark/50 max-sm:text-sm"}>Tham gia hệ thống từ ngày</p>
+              <p className={"font-semibold italic text-dark max-sm:text-sm"}>
                 {formatDate(customerInfo?.createdAt, "onlyDate")}
               </p>
             </div>
           </div>
-          <div>
-            <h5 className="mr-1 inline-block text-warning">{customerInfo?.vipPoints.currentPoint}</h5>
-            <img src={vippoint} className="inline-block h-[19px] w-[26px]" />
+          <div className="flex justify-center gap-2">
+            <h5 className="inline-block text-warning max-sm:text-sm sm:mr-1">
+              {customerInfo?.vipPoints.currentPoint}
+            </h5>
+            <img src={vippoint} className="inline-block max-sm:size-4 sm:mt-1 sm:h-[19px] sm:w-[26px]" />
           </div>
         </div>
       </div>

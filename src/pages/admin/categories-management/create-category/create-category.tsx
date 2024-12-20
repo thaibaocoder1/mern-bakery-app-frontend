@@ -1,16 +1,16 @@
-import WrapperContainer from "@/components/admin/wrapper-container";
 import AdminHeader from "@/components/admin/admin-header";
-import { Input, Button, Textarea, Switch } from "@nextui-org/react";
-import adminRoutes from "@/config/routes/admin-routes.config";
-import { toast } from "react-toastify";
+import WrapperContainer from "@/components/admin/wrapper-container";
 import iconConfig from "@/config/icons/icon-config";
-import { useState } from "react";
-import generateCategoryKey from "@/utils/generate-category-key";
-import useStaffAxios from "@/hooks/useStaffAxios.ts";
+import adminRoutes from "@/config/routes/admin-routes.config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
+import useStaffAxios from "@/hooks/useStaffAxios.ts";
 import { IAPIResponse } from "@/types/api-response";
-import { useNavigate } from "react-router-dom";
 import { ICategoryForm } from "@/types/category";
+import generateCategoryKey from "@/utils/generate-category-key";
+import { Button, Input, Textarea } from "@nextui-org/react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const CreateCategory = () => {
   const staffAxios = useStaffAxios();
   const navigate = useNavigate();
@@ -33,6 +33,9 @@ const CreateCategory = () => {
     });
   };
   const handleCreateCategory = () => {
+    if (Object.values(category).includes("")) {
+      return toast.error("Vui lòng điền đầy đủ thông tin");
+    }
     staffAxios
       .post<IAPIResponse>(apiRoutes.categories.create, category)
       .then((response) => response.data)

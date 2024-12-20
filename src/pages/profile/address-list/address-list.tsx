@@ -93,7 +93,7 @@ const AddressList: React.FC<AddressListProps> = ({ customerAddress }) => {
               <div className="rounded-xl border px-4 py-2" key={index}>
                 <div className="flex items-start justify-between">
                   <div className={"flex items-center"}>
-                    <h6>
+                    <h6 className="truncate font-semibold max-sm:text-sm">
                       {address.fullName} - {address.phoneNumber}
                     </h6>
                   </div>
@@ -121,7 +121,7 @@ const AddressList: React.FC<AddressListProps> = ({ customerAddress }) => {
                     </Button>
                   </div>
                 </div>
-                <p className={`${textSizes.sm} truncate pt-4`}>{address.fullAddress}</p>
+                <p className={`${textSizes.sm} truncate sm:pt-4`}>{address.fullAddress}</p>
               </div>
             ))
           )}

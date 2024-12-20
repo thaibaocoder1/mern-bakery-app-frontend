@@ -207,7 +207,7 @@ const ProductDetails = () => {
       />
       <ModelFeedBacks isOpen={isOpen} onOpenChange={onOpenChange} cakeRates={cakeInfo.cakeRates} />
       <div className="mx-auto mt-8 max-w-7xl overflow-hidden max-[1310px]:px-2">
-        <div className="grid max-w-7xl gap-x-4 gap-y-2 max-lg:px-4 md:grid-cols-2">
+        <div className="grid max-w-7xl gap-x-4 gap-y-2 max-lg:px-4 max-sm:w-full md:grid-cols-2">
           <div className="w-full">
             <div className="flex items-center justify-center rounded-lg bg-danger-50 px-4 md:h-[632px]">
               <Image
@@ -229,7 +229,7 @@ const ProductDetails = () => {
           </div>
           <div>
             <h1 className="max-lg:text-4xl">{cakeInfo.cakeInfo.cakeName}</h1>
-            <div className="mt-2 flex items-center gap-x-3">
+            <div className="mt-2 flex items-center gap-x-3 max-lg:flex-wrap">
               <div className="flex gap-x-2">
                 {Array.from({
                   length: 5,
@@ -250,11 +250,6 @@ const ProductDetails = () => {
                     />
                   );
                 })}
-                {/* <FaStar className="text-warning" size={iconSize.medium} />
-                <FaStar className="text-warning" size={iconSize.medium} />
-                <FaStar className="text-warning" size={iconSize.medium} />
-                <FaStar className="text-warning" size={iconSize.medium} />
-                <FaStar className="text-warning" size={iconSize.medium} /> */}
                 <span className={`${textSizes.base}`}>
                   (
                   {cakeInfo.cakeRates.length === 0
@@ -351,7 +346,7 @@ const ProductDetails = () => {
                   </ButtonGroup>
                 </div>
               </div>
-              <div className={`flex gap-2 ${cakeInfo.cakeInfo.isHide ? "hidden" : ""}`}>
+              <div className={`flex gap-2 ${cakeInfo.cakeInfo.isHide ? "hidden" : ""} max-[500px]:flex-col`}>
                 <Button
                   size="lg"
                   color="primary"

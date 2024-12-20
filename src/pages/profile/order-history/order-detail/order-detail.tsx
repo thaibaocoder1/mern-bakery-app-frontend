@@ -24,6 +24,7 @@ import FormReturnOrder from "./form-return-order";
 import OrderCustomerInfo from "./order-customer-info";
 import OrderStatus from "./order-status";
 import { displayImage } from "@/utils/display-image";
+import clsx from "clsx";
 const OrderDetail = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -60,11 +61,6 @@ const OrderDetail = () => {
 
   const navigate = useNavigate();
   const handleCancelOrder = (orderId: string) => {
-    console.log("Cancel order", cancelReason);
-    if (orderData?.orderStatus !== "processing") {
-      onOpenChange();
-      return toast.error("Bạn không thể hủy đơn hàng đã được xác nhận");
-    }
     axiosClient
       .patch<IAPIResponse>(apiRoutes.orders.cancelOrder(orderId), {
         explainReason: cancelReason,
@@ -124,6 +120,13 @@ const OrderDetail = () => {
         setOrderData(response.results);
       });
   };
+  function isMoreThanHalfDay(pastDate: string) {
+    const pastDateObj = new Date(pastDate).getTime();
+    const currentDate = new Date().getTime();
+    const timeDifference = currentDate - pastDateObj;
+    const halfDayInMs = 12 * 60 * 60 * 1000;
+    return timeDifference > halfDayInMs;
+  }
 
   useEffect(() => {
     if (!orderId) {
@@ -262,14 +265,17 @@ const OrderDetail = () => {
                 {orderData.orderStatus === "completed" && (
                   <>
                     <Button
-                      className="mb-2 w-full"
+                      className={clsx("mb-2 w-full", {
+                        "cursor-not-allowed": isMoreThanHalfDay(orderData.updatedAt),
+                      })}
                       variant="solid"
                       color="danger"
                       size="lg"
                       radius="lg"
                       onPress={onOpenChangeOrderReturn}
+                      isDisabled={isMoreThanHalfDay(orderData.updatedAt)}
                     >
-                      Trả Hàng
+                      {isMoreThanHalfDay(orderData.updatedAt) ? "Quá thời gian trả hàng" : "Trả hàng"}
                     </Button>
                   </>
                 )}

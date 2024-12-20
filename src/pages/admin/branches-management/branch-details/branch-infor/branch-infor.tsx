@@ -47,7 +47,7 @@ const BranchInformation = ({ branchInfo, numOfStaffs }: BranchInforProps) => {
                 </Chip>
               </div>
               <div className={"flex flex-col items-center gap-2"}>
-                <p>Nhân viên chi nhánh</p>
+                <p>Nhân viên</p>
                 <Chip
                   size="lg"
                   color={"primary"}

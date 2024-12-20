@@ -67,8 +67,9 @@ const UpdatePlan = () => {
       return toast.error("Vui lòng điền đủ thông tin");
     }
     if (
-      typeof payload.planActivated?.startDate === "object" ||
-      typeof payload.planActivated?.endDate === "object"
+      payload.planType === "week" &&
+      (typeof payload.planActivated?.startDate === "object" ||
+        typeof payload.planActivated?.endDate === "object")
     ) {
       return toast.error("Thời gian kiểu tuần là 1 tuần");
     }

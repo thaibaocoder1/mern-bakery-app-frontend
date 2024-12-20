@@ -1,8 +1,6 @@
 import AdminHeader from "@/components/admin/admin-header";
 import Loading from "@/components/admin/loading";
-import ModalConfirmDelete from "@/components/admin/modal-confirm-delete";
 import WrapperContainer from "@/components/admin/wrapper-container";
-import CakeCard from "@/components/cakes/cake-card";
 import iconConfig from "@/config/icons/icon-config";
 import adminRoutes from "@/config/routes/admin-routes.config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
@@ -10,11 +8,10 @@ import useStaffAxios from "@/hooks/useStaffAxios";
 import { IAPIResponse, IPaginationMetadata } from "@/types/api-response";
 import { ICake } from "@/types/cake";
 import { ICategory } from "@/types/category";
+import { MapCategoryStatusColor, MapCategoryStatusText } from "@/utils/map-data/categories";
 import useHandleTokenExpiration from "@/utils/token-expired";
 import {
   Button,
-  ButtonProps,
-  Checkbox,
   Chip,
   Input,
   Modal,
@@ -35,10 +32,9 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CakeItem from "../branches-management/branch-details/branch-products/cake-item";
-import { MapCategoryStatusColor, MapCategoryStatusText } from "@/utils/map-data/categories";
 
 const SoftDeleteModalContent = ({ listCakesInCategory }: { listCakesInCategory: ICake[] }) => {
   return (

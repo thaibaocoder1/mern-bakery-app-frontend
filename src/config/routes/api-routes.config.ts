@@ -184,10 +184,9 @@ const apiRoutes = {
     removeExpiredMaterials: (branchId: string) => `branches/${branchId}/remove-materials`,
   },
   locationAPI: {
-    // provinces: "https://vapi.vnappmob.com/api/province/",
     provinces: "/vietnam_provinces_data.json",
-    district: (provinceId: string) => `https://vapi.vnappmob.com/api/province/district/${provinceId}`,
-    ward: (districtId: string) => `https://vapi.vnappmob.com/api/province/ward/${districtId}`,
+    district: (provinceId: string) => `https://vapi.vnappmob.com/api/v2/province/district/${provinceId}`,
+    ward: (districtId: string) => `https://vapi.vnappmob.com/api/v2/province/ward/${districtId}`,
   },
   vnPay: {
     createPayment: "vnpay/create-url",

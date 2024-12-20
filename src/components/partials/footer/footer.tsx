@@ -1,12 +1,12 @@
 import { Button, Select, SelectItem } from "@nextui-org/react";
-import { FaFacebook, FaLanguage } from "react-icons/fa";
+import { FaLanguage } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
 import { iconSize } from "@/config/icons/icon-config";
 import { FaFacebookF, FaInstagram } from "react-icons/fa6";
+
 const Footer = () => {
   return (
-    <footer className="mt-16 w-full border-t-1 px-4 py-8">
+    <footer className="mt-16 w-full overflow-hidden border-t-1 px-4 py-8">
       <div className={`mx-auto flex max-w-7xl justify-between`}>
         <div>
           <Select
@@ -19,20 +19,22 @@ const Footer = () => {
             <SelectItem key={1}>Việt Nam</SelectItem>
           </Select>
 
-          <div className="mt-4 flex gap-2 max-lg:flex-col max-md:flex-col">
-            <p className="font-semibold">© AnBakery - Developed from The Graduation Project</p>
+          <div className="mt-4 flex gap-2 overflow-hidden max-lg:flex-col max-md:flex-col">
+            <p className="truncate font-semibold max-sm:text-sm">
+              © AnBakery - Developed from The Graduation Project
+            </p>
             <p className="max-lg:hidden">/</p>
-            <div className="flex items-center gap-4">
-              <Link to="/cakes" className="text-base hover:text-primary">
+            <div className="flex w-full items-center gap-4 overflow-hidden">
+              <Link to="/cakes" className="truncate text-base hover:text-primary max-sm:text-sm">
                 Menu bánh
               </Link>
-              <Link to="/policy" className="text-base hover:text-primary">
+              <Link to="/policy" className="truncate text-base hover:text-primary max-sm:text-sm">
                 Chính sách
               </Link>
-              <Link to="/vouchers" className="text-base hover:text-primary">
+              <Link to="/vouchers" className="truncate text-base hover:text-primary max-sm:text-sm">
                 Khuyến mãi
               </Link>
-              <Link to="/branch-list" className="text-base hover:text-primary">
+              <Link to="/branch-list" className="truncate text-base hover:text-primary max-sm:text-sm">
                 Danh sách cửa hàng
               </Link>
             </div>

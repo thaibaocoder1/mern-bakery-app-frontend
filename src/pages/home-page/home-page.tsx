@@ -35,7 +35,11 @@ const HomePage = () => {
   return (
     <section>
       <div className="mx-auto flex w-full justify-center">
-        <Image src={Banner} alt="error" className="object-fill max-lg:h-96 max-md:h-80" />
+        <Image
+          src={Banner}
+          alt="error"
+          className="object-fill max-lg:h-96 max-md:h-80 max-sm:object-cover max-sm:object-left"
+        />
       </div>
       <div className="mx-auto max-w-7xl">
         <div>

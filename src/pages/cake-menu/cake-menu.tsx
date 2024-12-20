@@ -3,18 +3,18 @@ import LoadingClient from "@/components/common/loading-client";
 import { apiRoutes } from "@/config/routes/api-routes.config";
 import useAxios from "@/hooks/useAxios";
 import { IAPIResponse, IPaginationMetadata } from "@/types/api-response";
-import { ICake } from "@/types/cake";
-import { Pagination } from "@nextui-org/pagination";
-import { Select, SelectItem, Spinner } from "@nextui-org/react";
-import { useEffect, useMemo, useState } from "react";
-import SidebarFilter from "./sidebar-filter";
-import { ICategory } from "@/types/category";
-import listOfPrices from "./price-fillter";
-import { IBranch } from "@/types/branch";
-import { useSearchParams } from "react-router-dom";
-import { AxiosError } from "axios";
 import { IAPIResponseError } from "@/types/api-response-error";
+import { IBranch } from "@/types/branch";
+import { ICake } from "@/types/cake";
+import { ICategory } from "@/types/category";
+import { Pagination } from "@nextui-org/pagination";
+import { Select, SelectItem, SharedSelection, Spinner } from "@nextui-org/react";
+import { AxiosError } from "axios";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import listOfPrices from "./price-fillter";
+import SidebarFilter from "./sidebar-filter";
 
 interface ISelectedBranch {
   branchName: string | null;
@@ -37,6 +37,7 @@ const ProductMenu = () => {
   const [selectedPriceWithBranch, setSelectedPriceWithBranch] = useState<string | null>(null);
   const [selectedCategoriesWithBranch, setSelectedCategoriesWithBranch] = useState<string[]>([]);
   const [selectedBranch, setSelectedBranch] = useState<ISelectedBranch | null>(null);
+  const [selectedBranchMobile, setSelectedBranchMobile] = useState<string>("all");
   const [metaData, setMetaData] = useState<IPaginationMetadata | null>(null);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -96,6 +97,21 @@ const ProductMenu = () => {
       return newValue;
     });
   };
+  const handleBranchChange = (event: SharedSelection) => {
+    const branchId = Array.from(event).toString() || "all";
+    if (branchId === "all") {
+      setSelectedBranch(null);
+    } else {
+      const branchInfo = listBranches.find((branch) => branch._id === branchId);
+      const branchApplied: ISelectedBranch = {
+        branchName: branchInfo!.branchConfig.branchDisplayName,
+        businessProducts: branchInfo?.businessProducts,
+        isActive: branchInfo?.isActive,
+      };
+      setSelectedBranch(branchApplied);
+    }
+    setSelectedBranchMobile(branchId);
+  };
   // filter when select branch
   const handleSortWithBranch = (value: string) => {
     const sortedProducts = [...listAllProducts];
@@ -126,7 +142,6 @@ const ProductMenu = () => {
       filteredProducts = filteredProducts.filter((cake) =>
         selectedBranch.businessProducts?.includes(cake._id),
       );
-      console.log("🚀 ~ useEffect ~ filteredProducts:", filteredProducts);
     }
 
     if (selectedPriceWithBranch) {
@@ -142,7 +157,6 @@ const ProductMenu = () => {
       );
     }
 
-    console.log(filteredProducts);
     setListAllProducts(filteredProducts);
   }, [selectedCategoriesWithBranch, selectedPriceWithBranch, selectedBranch]);
 
@@ -188,40 +202,6 @@ const ProductMenu = () => {
     };
   }, [filters]);
 
-  // useEffect(() => {
-  //   setIsFiltering(true);
-  //   Promise.all([
-  //     axiosClient.get<IAPIResponse<ICategory[]>>(apiRoutes.categories.getAll),
-  //     axiosClient.get<IAPIResponse<ICake[]>>(apiRoutes.cakes.getAll, {
-  //       params: {
-  //         ...filters,
-  //       },
-  //     }),
-  //     axiosClient.get<IAPIResponse<IBranch[]>>(apiRoutes.branches.getAll),
-  //   ])
-  //     .then(([categoriesResponse, productsResponse, branchesResponse]) => {
-  //       setListCategories(categoriesResponse.data.results.filter((x) => x.isActive));
-  //       setListProducts(productsResponse.data.results);
-  //       setListBranches(branchesResponse.data.results.filter((x) => x.isActive));
-  //       setMetaData(productsResponse.data.metadata as IPaginationMetadata);
-  //     })
-  //     .catch((error) => {
-  //       if (error instanceof AxiosError) {
-  //         const responseError = error.response?.data as IAPIResponseError;
-  //         if (responseError.message === "Trang không tồn tại, dữ liệu bạn yêu cầu chỉ có 2 trang") {
-  //           handlePageChange(1);
-  //           return toast.error("Bạn không thể xem một trang không tồn tại");
-  //         }
-  //       }
-  //       setListProducts([]);
-  //       setMetaData(null);
-  //     })
-  //     .finally(() => {
-  //       setIsFiltering(false);
-  //       return setIsLoading(false);
-  //     });
-  // }, [filters]);
-
   useEffect(() => {
     axiosClient
       .get<IAPIResponse<ICake[]>>(apiRoutes.cakes.getAll + "?noPagination=true")
@@ -232,6 +212,7 @@ const ProductMenu = () => {
       })
       .catch((error) => console.error(error));
   }, []);
+
   if (isLoading) return <LoadingClient />;
 
   return (
@@ -251,22 +232,34 @@ const ProductMenu = () => {
         <div className="pb-4 lg:hidden">
           <div>
             <h5 className="mb-4">Chọn theo tiêu chí</h5>
-            <div className="flex gap-2">
-              <Select placeholder="Chọn danh mục " selectionMode="multiple" aria-label="Chọn danh mục">
-                {listCategories.map((category) => (
-                  <SelectItem
-                    key={category.categoryKey}
-                    onClick={() => handleCategoryChange(category.categoryKey)}
-                  >
-                    {category.categoryName}
-                  </SelectItem>
-                ))}
-              </Select>
-              <Select placeholder="Chọn khoảng giá" aria-label="Chọn khoảng giá">
-                {listOfPrices.map((price) => (
-                  <SelectItem key={price.value} onClick={() => handleChangePrice(price.value)}>
-                    {price.name}
-                  </SelectItem>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <Select placeholder="Danh mục" selectionMode="multiple" aria-label="Chọn danh mục">
+                  {listCategories.map((category) => (
+                    <SelectItem
+                      key={category.categoryKey}
+                      onClick={() => handleCategoryChange(category.categoryKey)}
+                    >
+                      {category.categoryName}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Select placeholder="Khoảng giá" aria-label="Chọn khoảng giá">
+                  {listOfPrices.map((price) => (
+                    <SelectItem key={price.value} onClick={() => handleChangePrice(price.value)}>
+                      {price.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+              <Select
+                placeholder="Chi nhánh"
+                aria-label="Chọn chi nhánh"
+                onSelectionChange={handleBranchChange}
+                selectedKeys={[selectedBranchMobile]}
+              >
+                {listBranches.map((branch) => (
+                  <SelectItem key={branch._id}>{branch.branchConfig.branchDisplayName}</SelectItem>
                 ))}
               </Select>
             </div>

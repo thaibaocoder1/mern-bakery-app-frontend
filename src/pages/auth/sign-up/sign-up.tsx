@@ -1,20 +1,19 @@
-import { Image, Input, Button, Divider } from "@nextui-org/react";
 import imageAn from "@/assets/images/OnlyNameColorful.png";
 import logoAnbakery from "@/assets/images/WithSloganColorful.png";
-import { Link } from "react-router-dom";
-import { useState, useMemo, FormEvent } from "react";
-import { toast } from "react-toastify";
-import useAxios from "@/hooks/useAxios";
+import { signInWithFacebookPopup, signInWithGooglePopup } from "@/config/firebase/firebase.config";
+import iconConfig from "@/config/icons/icon-config";
 import { apiRoutes } from "@/config/routes/api-routes.config";
-import { useNavigate } from "react-router-dom";
 import clientRoutes from "@/config/routes/client-routes.config";
+import useAxios from "@/hooks/useAxios";
 import { IAPIResponse } from "@/types/api-response";
 import { ISignUpForm, ITokenResponse } from "@/types/auth";
-import validateEmail from "@/utils/validate-email";
-import { signInWithFacebookPopup, signInWithGooglePopup } from "@/config/firebase/firebase.config";
-import { useCookies } from "react-cookie";
 import { ICustomer } from "@/types/customer";
-import iconConfig from "@/config/icons/icon-config";
+import validateEmail from "@/utils/validate-email";
+import { Button, Divider, Image, Input } from "@nextui-org/react";
+import { FormEvent, useMemo, useState } from "react";
+import { useCookies } from "react-cookie";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const axiosClient = useAxios();
@@ -127,7 +126,7 @@ const SignUp = () => {
 
   return (
     <section className="flex h-screen w-screen">
-      <div className="relative flex h-full min-w-[480px] flex-col items-center justify-center rounded-r-xl px-8 shadow-xl">
+      <div className="relative flex h-full flex-col items-center justify-center rounded-r-xl max-sm:w-full max-sm:px-2 sm:min-w-[480px] sm:px-8 sm:shadow-xl">
         <div className={"absolute z-0 h-full"}>
           <div className={"mt-12 flex w-full justify-center"}>
             <Link to={"/"}>
@@ -136,8 +135,8 @@ const SignUp = () => {
           </div>
         </div>
         <div className="z-10 flex w-full flex-col items-center justify-center gap-4">
-          <form className="flex w-full flex-col gap-y-4 max-2xl:px-4" onSubmit={handleSignUp}>
-            <h2 className="truncate">Đăng ký</h2>
+          <form className="flex w-full flex-col gap-4 max-[1450px]:px-4" onSubmit={handleSignUp}>
+            <h2 className="truncate max-sm:text-2xl">Đăng ký</h2>
             <Input
               className="w-full"
               type="email"

@@ -1,6 +1,7 @@
 import vippoint from "@/assets/images/vippoint.png";
 import { iconSize } from "@/config/icons/icon-config";
 import textSizes from "@/config/styles/text-size";
+import useWindowSize from "@/hooks/useWindowSize";
 import { IVipPoints } from "@/types/customer";
 import { formatDate } from "@/utils/format-date";
 import { sliceText } from "@/utils/slice-text";
@@ -15,7 +16,6 @@ import {
   ScrollShadow,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { BiFilter } from "react-icons/bi";
 import { FaAlignLeft } from "react-icons/fa";
 
 interface VipPointsProps {
@@ -23,7 +23,7 @@ interface VipPointsProps {
 }
 const VipPoints: React.FC<VipPointsProps> = ({ customerPoints }) => {
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set(["old"]));
-
+  const { width } = useWindowSize();
   console.log(customerPoints, "customerPoints");
   const handleSortItem = (key: string) => {
     setSelectedKeys(new Set([key]));
@@ -46,7 +46,11 @@ const VipPoints: React.FC<VipPointsProps> = ({ customerPoints }) => {
           </div>
           <Dropdown>
             <DropdownTrigger>
-              <Button variant="bordered" size="md" startContent={<FaAlignLeft size={iconSize.base} />}>
+              <Button
+                variant="bordered"
+                size={width < 640 ? "sm" : "md"}
+                startContent={<FaAlignLeft size={iconSize.base} />}
+              >
                 Bộ Lọc
               </Button>
               {/* <Button variant="bordered">Open Menu</Button> */}
@@ -66,18 +70,18 @@ const VipPoints: React.FC<VipPointsProps> = ({ customerPoints }) => {
           customerPoints.historyPoints.map((_, index) => (
             <div className="rounded-lg border px-4 py-2" key={index}>
               <div className="flex justify-between">
-                <span className={textSizes.base}>
+                <span className={`${textSizes.base} mr-2 truncate max-sm:text-sm`}>
                   {_.title.split("-")[0] + sliceText(_.title.split("-")[1]?.toString())}
                 </span>
-                <div>
-                  <span className="text-default-300">Điểm tích lũy: </span>
-                  <h6 className="inline-block text-warning">
+                <div className="flex">
+                  <span className="mr-2 truncate text-default-300 max-sm:text-sm">Điểm tích lũy: </span>
+                  <h6 className="inline-block text-warning max-sm:text-sm">
                     ({_.amount > 0 && "+"}
                     {customerPoints.historyPoints[index].amount})
                   </h6>
                 </div>
               </div>
-              <span className="mt-2 text-default-300">
+              <span className="mt-2 text-default-300 max-sm:text-sm">
                 {formatDate(customerPoints.historyPoints[index].createdAt as string, "fullDate")}
               </span>
             </div>

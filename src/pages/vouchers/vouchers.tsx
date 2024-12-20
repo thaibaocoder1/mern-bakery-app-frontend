@@ -57,10 +57,16 @@ const Vouchers = (props: VouchersProps) => {
     <div className={"flex justify-center"}>
       <div className={"mt-8 flex w-full max-w-7xl flex-col items-center gap-8 max-xl:px-4"}>
         <header>
-          <h1 className={"title uppercase text-dark/25 max-xl:text-7xl"}>Danh sách mã giảm giá </h1>
+          <h1 className={"title text-center uppercase text-dark/25 max-xl:text-7xl max-sm:text-4xl"}>
+            Danh sách mã giảm giá
+          </h1>
         </header>
-        <main className={"grid w-full grid-cols-4 gap-4"}>
-          <div className={"col-span-1 flex flex-col gap-4 rounded-2xl border p-4 shadow-custom"}>
+        <main className={"grid w-full grid-cols-4 gap-4 max-xl:grid-cols-2"}>
+          <div
+            className={
+              "col-span-1 flex flex-col gap-4 rounded-2xl border p-4 shadow-custom max-xl:col-span-full"
+            }
+          >
             <h4>Bộ lọc</h4>
             <Divider />
             <RadioGroup
@@ -81,12 +87,14 @@ const Vouchers = (props: VouchersProps) => {
             >
               <Radio value={"all"}>Tất cả</Radio>
               <Radio value={"null"}>Hệ thống</Radio>
-              {listBranches.map((branch) => (
-                <Radio value={branch._id}>{branch.branchConfig.branchDisplayName}</Radio>
+              {listBranches.map((branch, index) => (
+                <Radio key={branch._id + index} value={branch._id}>
+                  {branch.branchConfig.branchDisplayName}
+                </Radio>
               ))}
             </RadioGroup>
           </div>
-          <div className="col-span-3 flex flex-col gap-4 rounded-2xl border p-4 shadow-custom">
+          <div className="col-span-3 flex flex-col gap-4 rounded-2xl border p-4 shadow-custom max-xl:col-span-full">
             <div className={"flex flex-col gap-4"}>
               <h4>
                 Có <span className={"font-semibold text-primary"}>{listVouchers.length}</span> mã phù hợp
