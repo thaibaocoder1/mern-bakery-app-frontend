@@ -57,7 +57,7 @@ const Vouchers = (props: VouchersProps) => {
     <div className={"flex justify-center"}>
       <div className={"mt-8 flex w-full max-w-7xl flex-col items-center gap-8 max-xl:px-4"}>
         <header>
-          <h1 className={"title text-center uppercase text-dark/25 max-xl:text-7xl max-sm:text-4xl"}>
+          <h1 className={"title max-sm:text:6xl text-center uppercase text-dark/25 max-xl:text-4xl"}>
             Danh sách mã giảm giá
           </h1>
         </header>

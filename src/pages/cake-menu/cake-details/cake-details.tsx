@@ -26,6 +26,7 @@ import { useCookies } from "react-cookie";
 import ModelFeedBacks from "./model-feed-backs";
 import ModalConfirm from "@/components/admin/modal-confirm";
 import { displayImage } from "@/utils/display-image";
+import { slugify } from "@/utils/slugify";
 const ProductDetails = () => {
   const { cakeId } = useParams();
   const navigate = useNavigate();
@@ -207,13 +208,13 @@ const ProductDetails = () => {
       />
       <ModelFeedBacks isOpen={isOpen} onOpenChange={onOpenChange} cakeRates={cakeInfo.cakeRates} />
       <div className="mx-auto mt-8 max-w-7xl overflow-hidden max-[1310px]:px-2">
-        <div className="grid max-w-7xl gap-x-4 gap-y-2 max-lg:px-4 max-sm:w-full md:grid-cols-2">
+        <div className="grid max-w-7xl gap-x-4 gap-y-2 max-lg:px-4 max-sm:block max-sm:w-full md:grid-cols-2">
           <div className="w-full">
             <div className="flex items-center justify-center rounded-lg bg-danger-50 px-4 md:h-[632px]">
               <Image
                 src={displayImage(cakeInfo.cakeInfo.cakeThumbnail, cakeInfo.cakeInfo._id)}
-                alt="Error"
-                className="h-96 w-full object-cover max-sm:h-96"
+                alt={slugify(cakeInfo.cakeInfo.cakeName)}
+                className="h-96 w-full object-contain max-sm:h-64"
               />
             </div>
             <div className="w-scrollbar scrollbar-track mt-4 flex w-full gap-x-2 overflow-hidden overflow-x-auto">
@@ -228,8 +229,8 @@ const ProductDetails = () => {
             </div>
           </div>
           <div>
-            <h1 className="max-lg:text-4xl">{cakeInfo.cakeInfo.cakeName}</h1>
-            <div className="mt-2 flex items-center gap-x-3 max-lg:flex-wrap">
+            <h1 className="max-lg:text-4xl max-sm:mt-2">{cakeInfo.cakeInfo.cakeName}</h1>
+            <div className="mt-2 flex items-center gap-x-3 max-lg:flex-col max-lg:items-start max-lg:gap-y-3">
               <div className="flex gap-x-2">
                 {Array.from({
                   length: 5,
@@ -261,16 +262,18 @@ const ProductDetails = () => {
                   .0 )
                 </span>
               </div>
-              <span className={`${textSizes.base} truncate text-warning`}>
-                {cakeInfo.cakeRates.length} lượt đánh giá
-              </span>
-              <span className={`${textSizes.base} text-success`}>|</span>
-              <span className={`${textSizes.base} truncate text-success`}>
-                {cakeInfo?.cakeInfo.soldCount} Lượt bán
-              </span>
-              <span className={`${textSizes.base} truncate text-success`}>
-                {cakeInfo?.cakeInfo.views} Lượt xem
-              </span>
+              <div className="flex gap-x-2">
+                <span className={`${textSizes.base} truncate text-warning`}>
+                  {cakeInfo.cakeRates.length} lượt đánh giá
+                </span>
+                <span className={`${textSizes.base} text-success`}>|</span>
+                <span className={`${textSizes.base} truncate text-success`}>
+                  {cakeInfo?.cakeInfo.soldCount} Lượt bán
+                </span>
+                <span className={`${textSizes.base} truncate text-success`}>
+                  {cakeInfo?.cakeInfo.views} Lượt xem
+                </span>
+              </div>
             </div>
             <h1 className="text-primary max-lg:py-4 max-lg:text-4xl lg:my-8">
               {formatCurrencyVND(cakeInfo.cakeInfo.cakeDefaultPrice, cakeInfo.cakeInfo.discountPercents)}
@@ -308,29 +311,27 @@ const ProductDetails = () => {
                   </div>
                 ))}
               </div>
-              <div className={`flex gap-x-4`}>
-                <div>
-                  <Select
-                    className="mt-2 w-[307px]"
-                    size={"lg"}
-                    aria-label="Chọn cửa hàng"
-                    placeholder="Chọn cửa hàng"
-                    label={"CHỌN CỬA HÀNG"}
-                    labelPlacement={"outside"}
-                    classNames={{
-                      label: "font-bold",
-                    }}
-                    onSelectionChange={(e) =>
-                      setCustomerCart({ ...customerCart, branchId: Array.from(e).join("") })
-                    }
-                  >
-                    {listBraches.map((branch) => (
-                      <SelectItem key={branch._id} value={branch._id}>
-                        {branch.branchConfig.branchDisplayName}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                </div>
+              <div className={`flex gap-x-4 max-sm:flex-col max-sm:items-start max-sm:gap-y-4`}>
+                <Select
+                  className="mt-2 w-[307px]"
+                  size={"lg"}
+                  aria-label="Chọn cửa hàng"
+                  placeholder="Chọn cửa hàng"
+                  label={"CHỌN CỬA HÀNG"}
+                  labelPlacement={"outside"}
+                  classNames={{
+                    label: "font-bold",
+                  }}
+                  onSelectionChange={(e) =>
+                    setCustomerCart({ ...customerCart, branchId: Array.from(e).join("") })
+                  }
+                >
+                  {listBraches.map((branch) => (
+                    <SelectItem key={branch._id} value={branch._id}>
+                      {branch.branchConfig.branchDisplayName}
+                    </SelectItem>
+                  ))}
+                </Select>
                 <div className={"flex flex-col gap-1"}>
                   <span className={`${textSizes.base} text-default-flat block font-bold`}>SỐ LƯỢNG</span>
                   <ButtonGroup radius="sm" size="md" aria-label="btnGroup">

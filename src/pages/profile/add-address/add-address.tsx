@@ -35,7 +35,7 @@ const AddAddress = () => {
   });
   useEffect(() => {
     axios
-      .get(`${apiRoutes.locationAPI}`)
+      .get(apiRoutes.locationAPI.provinces)
       .then((response) => {
         const provincesData = response.data.results;
         setProvinces(provincesData);

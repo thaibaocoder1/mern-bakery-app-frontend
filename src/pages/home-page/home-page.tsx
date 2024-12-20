@@ -45,27 +45,24 @@ const HomePage = () => {
   return (
     <section>
       <div className="mx-auto flex w-full justify-center">
-        <Image src={Banner} alt="error" className="object-fill max-lg:h-96 max-md:h-80" />
+        <Image src={Banner} alt="error" className="h-full w-full object-fill max-lg:h-96 max-md:h-80" />
       </div>
       <div className="mx-auto max-w-7xl">
         <div>
-          <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl max-sm:text-4xl">
+          <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl">
             sản phẩm mới
           </h1>
 
           <div className="split-column grid gap-x-4 gap-y-6 max-lg:px-6">
-            {listCakes
-              .slice(0, 4)
-              .reverse()
-              .map((cake) => (
-                <Fragment key={cake._id}>
-                  <CakeCard cakeData={cake} />
-                </Fragment>
-              ))}
+            {listCakes.map((cake) => (
+              <Fragment key={cake._id}>
+                <CakeCard cakeData={cake} />
+              </Fragment>
+            ))}
           </div>
         </div>
         <div>
-          <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl max-sm:text-4xl">
+          <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl">
             Top bán chạy
           </h1>
 
@@ -78,7 +75,7 @@ const HomePage = () => {
           </div>
         </div>
         <div>
-          <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl max-sm:text-4xl">
+          <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl">
             Top lượt xem
           </h1>
 

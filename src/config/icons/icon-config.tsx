@@ -5,7 +5,6 @@ import {
   BiFilter,
   BiMinus,
   BiPhoneCall,
-  BiPlus,
   BiRepost,
   BiSearchAlt,
   BiSolidTimer,
@@ -13,6 +12,7 @@ import {
 import { BsCashStack, BsClipboard2CheckFill, BsEyeFill, BsFillHandbagFill, BsQrCode } from "react-icons/bs";
 import { CiBarcode, CiMoneyBill } from "react-icons/ci";
 import {
+  FaBirthdayCake,
   FaGoogle,
   FaList,
   FaRegUser,
@@ -318,7 +318,6 @@ const iconConfig = {
       extraLarge: <IoMdNotifications size={iconSize.extraLarge} />,
     },
   },
-
   google: {
     small: <FaGoogle size={iconSize.small} />,
     base: <FaGoogle size={iconSize.base} />,
@@ -409,6 +408,13 @@ const iconConfig = {
     medium: <FaStore size={iconSize.medium} />,
     large: <FaStore size={iconSize.large} />,
     extraLarge: <FaStore size={iconSize.extraLarge} />,
+  },
+  cake: {
+    small: <FaBirthdayCake size={iconSize.small} />,
+    base: <FaBirthdayCake size={iconSize.base} />,
+    medium: <FaBirthdayCake size={iconSize.medium} />,
+    large: <FaBirthdayCake size={iconSize.large} />,
+    extraLarge: <FaBirthdayCake size={iconSize.extraLarge} />,
   },
 };
 export default iconConfig;

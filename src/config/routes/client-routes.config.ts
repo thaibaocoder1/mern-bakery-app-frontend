@@ -31,5 +31,8 @@ const clientRoutes = {
   policy: {
     root: "/policy",
   },
+  voucher: {
+    root: "/vouchers",
+  },
 };
 export default clientRoutes;

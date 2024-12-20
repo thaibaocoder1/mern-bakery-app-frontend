@@ -18,6 +18,7 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BiSolidCart } from "react-icons/bi";
+import { FaSearch, FaUser } from "react-icons/fa";
 import { FaRightToBracket } from "react-icons/fa6";
 import { Link, matchPath, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -155,7 +156,7 @@ const Header = () => {
           },
         )}
       >
-        <div>
+        <div className="hidden lg:flex">
           <NavLink
             to="cakes"
             className={({ isActive }) =>
@@ -248,6 +249,7 @@ const Header = () => {
               }
               return setIsShowSearch(!isShowSearch);
             }}
+            className="hidden sm:flex"
           />
 
           <Badge
@@ -269,6 +271,52 @@ const Header = () => {
           </Badge>
         </div>
       </nav>
+
+      <div className="fixed bottom-0 z-[100] w-full border-t bg-white shadow-md lg:hidden">
+        <div className="flex justify-around py-2">
+          <Button
+            variant="flat"
+            size="sm"
+            radius="full"
+            color="primary"
+            startContent={iconConfig.cake.small}
+            onClick={() => navigate(clientRoutes.cakes.root)}
+          />
+          <Button
+            variant="flat"
+            size="sm"
+            radius="full"
+            color="primary"
+            startContent={iconConfig.tags.small}
+            onClick={() => navigate(clientRoutes.voucher.root)}
+          />
+          <Button
+            variant="flat"
+            size="sm"
+            radius="full"
+            color="primary"
+            startContent={iconConfig.search.small}
+            onClick={() => setIsShowSearch(!isShowSearch)}
+          />
+          <Button
+            variant="flat"
+            size="sm"
+            radius="full"
+            color="primary"
+            startContent={<BiSolidCart size={16} />}
+            onClick={() => handleRedirectToCart()}
+          />
+          <Button
+            variant="flat"
+            size="sm"
+            radius="full"
+            color="primary"
+            startContent={<FaUser />}
+            onClick={() => navigate(clientRoutes.profile.root)}
+          />
+        </div>
+      </div>
+
       <div className="relative z-[1000] mx-auto w-full max-w-[1280px] bg-black">
         {isShowSearch && (
           <div
