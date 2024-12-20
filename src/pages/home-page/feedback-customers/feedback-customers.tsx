@@ -3,7 +3,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const FeedbackCustomers = () => (
   <div>
-    <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl max-sm:text-4xl">
+    <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl">
       FEEDBACK TỪ KHÁCH
     </h1>
     <div className="mx-auto flex items-center justify-center gap-8">

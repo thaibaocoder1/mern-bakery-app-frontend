@@ -151,7 +151,7 @@ const Header = () => {
         className={clsx(
           "relative mx-auto flex items-center justify-between py-4 transition-all max-xl:px-2 max-lg:px-6 max-sm:px-2",
           {
-            "w-[1280px] shadow-sm": isMatchPath && width < 1300,
+            "w-full shadow-sm": width < 1300,
             "max-w-7xl": width >= 1300,
           },
         )}

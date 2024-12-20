@@ -50,7 +50,7 @@ const OrderCustomerInfo = ({
         isReadOnly
       />
     </div>
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 max-md:flex-col">
       <div className={"flex flex-col items-center gap-2"}>
         <p className="text-dark">Phương thức thanh toán</p>
         <Chip color={MapPaymentStatusColor[paymentStatus]} size={"lg"}>

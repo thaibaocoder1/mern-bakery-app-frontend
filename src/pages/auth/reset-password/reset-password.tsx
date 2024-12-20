@@ -56,7 +56,7 @@ const ResetPassword = () => {
   return (
     <section className="flex h-screen w-screen">
       <div className="relative flex h-full flex-col items-center justify-center rounded-r-xl max-sm:w-full max-sm:px-2 sm:min-w-[480px] sm:px-8 sm:shadow-xl">
-        <div className={"pointer-events-none absolute z-0 h-full select-none"}>
+        <div className={"absolute z-0 h-full"}>
           <div className={"mt-12 flex w-full justify-center max-md:mt-10 max-md:opacity-40"}>
             <Link to={"/"}>
               <Image src={imageAn} className="max-md:max-w-44" />
@@ -116,7 +116,7 @@ const ResetPassword = () => {
           </div>
         </div>
       </div>
-      <div className="items-top flex grow-[1] justify-center">
+      <div className="flex grow-[1] items-center justify-center">
         <Image src={logoAnbakery} className="max-[1450px]:px-8 max-lg:hidden" />
       </div>
     </section>

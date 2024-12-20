@@ -18,7 +18,6 @@ const HomePage = () => {
   const [listBranches, setListBranches] = useState<IBranch[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [mostViewedCakes, setMostViewedCakes] = useState<ICake[]>([]);
-  const [bestSellingCakes, setBestSellingCakes] = useState<ICake[]>([]);
   useEffect(() => {
     Promise.all([
       axiosClient.get<IAPIResponse<ICake[]>>(apiRoutes.cakes.getAll + "?noPagination=true"),
@@ -35,7 +34,6 @@ const HomePage = () => {
             })
             .slice(0, 4),
         );
-        setBestSellingCakes(filteredData.filter((cake) => cake.soldCount >= 5));
         setMostViewedCakes(filteredData.filter((cake) => cake.views >= 35).slice(0, 4));
         setListBranches(branchesResponse.data.results);
       })
@@ -57,19 +55,6 @@ const HomePage = () => {
 
           <div className="split-column grid gap-x-4 gap-y-6 max-lg:px-6">
             {listCakes.map((cake) => (
-              <Fragment key={cake._id}>
-                <CakeCard cakeData={cake} />
-              </Fragment>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h1 className="my-16 text-center text-8xl uppercase text-default-300 max-lg:text-7xl max-md:text-6xl">
-            Top bán chạy
-          </h1>
-
-          <div className="split-column grid gap-x-4 gap-y-6 max-lg:px-6">
-            {bestSellingCakes.map((cake) => (
               <Fragment key={cake._id}>
                 <CakeCard cakeData={cake} />
               </Fragment>

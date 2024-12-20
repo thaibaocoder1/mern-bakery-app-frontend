@@ -18,7 +18,6 @@ const Footer = () => {
           >
             <SelectItem key={1}>Việt Nam</SelectItem>
           </Select>
-
           <div className="mt-4 flex gap-2 overflow-hidden max-lg:flex-col max-md:flex-col">
             <p className="truncate font-semibold max-sm:text-sm">
               © AnBakery - Developed from The Graduation Project

@@ -3,7 +3,9 @@ import { ICake, ICakeVariant } from "@/types/cake";
 import { IUserCart, TSelectedVariant } from "@/types/cart";
 import { IOrderGroupForm, TDeliveryMethod } from "@/types/order";
 import { IDecodedUrlParams } from "@/types/voucher";
+import { displayImage } from "@/utils/display-image";
 import { calculateDiscountPrice, formatCurrencyVND } from "@/utils/money-format";
+import { slugify } from "@/utils/slugify";
 import { Button, DatePicker, DateValue, Divider, Image, Input, Switch, Tooltip } from "@nextui-org/react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -187,8 +189,12 @@ const OrderItems = ({
                     <div className={"col-span-6 flex items-center max-sm:gap-2 sm:gap-4"}>
                       <div className={"aspect-square h-24 w-24"}>
                         <Image
-                          src={`http://localhost:3000/images/${cake?.cakeInfo?._id}/${cake.cakeInfo?.cakeThumbnail}`}
-                          alt="Error"
+                          src={displayImage(
+                            cake?.cakeInfo?.cakeThumbnail as string,
+                            cake?.cakeInfo?._id as string,
+                          )}
+                          fallbackSrc="https://placehold.co/400"
+                          alt={slugify(cake?.cakeInfo?.cakeName as string)}
                           className="max-sm:h-[80px] max-sm:w-[80px]"
                         />
                       </div>

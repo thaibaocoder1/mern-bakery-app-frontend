@@ -1,10 +1,10 @@
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Textarea,
 } from "@nextui-org/react";
 
@@ -56,9 +56,5 @@ const FormReturnOrder = ({
     </ModalContent>
   </Modal>
 );
-
-FormReturnOrder.defaultProps = {
-  foo: "bar",
-};
 
 export default FormReturnOrder;

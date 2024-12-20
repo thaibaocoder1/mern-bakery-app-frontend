@@ -169,131 +169,128 @@ const OrderDetail = () => {
         onConfirm={handleFeedbackOrder}
         setRates={setRates}
       />
-      <div className="mx-auto mt-8 w-[1280px]">
-        <div>
-          <ClientHeader
-            title={`Thông tin đơn hàng #${sliceText(orderData._id)}`}
-            showBackButton={true}
-            refBack={clientRoutes.profile.root}
-          />
-
-          <div className="mt-8 flex gap-x-3">
-            <div className="flex w-full flex-col gap-4">
-              <div className="rounded-2xl border shadow-custom">
-                <div className="flex items-center justify-between px-4 py-2">
-                  <h4 className={"text-dark"}>Danh sách mặt hàng - {orderData.orderItems.length} bánh</h4>
-                  <h6 className="rounded-lg bg-default/50 px-4 py-2">
-                    {orderData.branchId.branchConfig.branchDisplayName}
-                  </h6>
-                </div>
-                <div className="px-4 py-2">
-                  {orderData.orderItems.map((item, index) => (
-                    <div className="mt-2 flex items-center justify-between p-2" key={index}>
-                      <div className="flex items-center gap-x-4">
-                        <Image
-                          src={displayImage((item.cakeId as ICake).cakeThumbnail, (item.cakeId as ICake)._id)}
-                          alt={slugify((item.cakeId as ICake).cakeName)}
-                          height={75}
-                          width={75}
-                        />
-                        <div className="overflow-hidden">
-                          <h5>{(item?.cakeId as ICake).cakeName}</h5>
-                          <p className="mt-1 truncate text-sm">
-                            {handleShowSelectedVariant(
-                              item.selectedVariants,
-                              (item?.cakeId as ICake).cakeVariants,
-                            )}
-                          </p>
-                          <p className="mt-1 text-base font-semibold text-default-300">x{item.quantity}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-x-8">
-                        <h5 className="text-primary">
-                          {formatCurrencyVND(
-                            (item.cakeId as ICake).cakeDefaultPrice,
-                            (item.cakeId as ICake).discountPercents,
-                          )}
-                        </h5>
-                        <h5 className="text-primary">
-                          {handlePrice(
-                            calculateDiscountPrice(
-                              (item.cakeId as ICake).cakeDefaultPrice,
-                              (item.cakeId as ICake).discountPercents,
-                            ) * item.quantity,
+      <div className="mx-auto mt-8 w-[1280px] max-lg:w-full max-lg:px-4">
+        <ClientHeader
+          title={`Thông tin đơn hàng #${sliceText(orderData._id)}`}
+          showBackButton={true}
+          refBack={clientRoutes.profile.root}
+        />
+        <div className="mt-8 flex gap-x-3 max-lg:flex-col">
+          <div className="flex w-full flex-col gap-4">
+            <div className="rounded-2xl border shadow-custom">
+              <div className="flex items-center justify-between px-4 py-2">
+                <h4 className={"text-dark"}>Danh sách mặt hàng - {orderData.orderItems.length} bánh</h4>
+                <h6 className="rounded-lg bg-default/50 px-4 py-2">
+                  {orderData.branchId.branchConfig.branchDisplayName}
+                </h6>
+              </div>
+              <div className="px-4 py-2">
+                {orderData.orderItems.map((item, index) => (
+                  <div className="mt-2 flex items-center justify-between p-2" key={index}>
+                    <div className="flex items-center gap-x-4">
+                      <Image
+                        src={displayImage((item.cakeId as ICake).cakeThumbnail, (item.cakeId as ICake)._id)}
+                        alt={slugify((item.cakeId as ICake).cakeName)}
+                        height={75}
+                        width={75}
+                      />
+                      <div className="overflow-hidden">
+                        <h5>{(item?.cakeId as ICake).cakeName}</h5>
+                        <p className="mt-1 truncate text-sm">
+                          {handleShowSelectedVariant(
                             item.selectedVariants,
-                            (item.cakeId as ICake).cakeVariants,
-                            item.quantity,
+                            (item?.cakeId as ICake).cakeVariants,
                           )}
-                        </h5>
-                        {orderData.orderStatus === "completed" && (
-                          <Button
-                            isIconOnly
-                            color={"warning"}
-                            variant={"ghost"}
-                            isDisabled={item.isRated as boolean}
-                            onPress={() => {
-                              onOpenChangeFeedback();
-                              setCakePayload({
-                                cakeId: (item?.cakeId as ICake)._id,
-                                selectedVariants: item.selectedVariants,
-                              });
-                            }}
-                          >
-                            {iconConfig.star.base}
-                          </Button>
-                        )}
+                        </p>
+                        <p className="mt-1 text-base font-semibold text-default-300">x{item.quantity}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <div className="flex items-center gap-x-8">
+                      <h5 className="text-primary">
+                        {formatCurrencyVND(
+                          (item.cakeId as ICake).cakeDefaultPrice,
+                          (item.cakeId as ICake).discountPercents,
+                        )}
+                      </h5>
+                      <h5 className="text-primary">
+                        {handlePrice(
+                          calculateDiscountPrice(
+                            (item.cakeId as ICake).cakeDefaultPrice,
+                            (item.cakeId as ICake).discountPercents,
+                          ) * item.quantity,
+                          item.selectedVariants,
+                          (item.cakeId as ICake).cakeVariants,
+                          item.quantity,
+                        )}
+                      </h5>
+                      {orderData.orderStatus === "completed" && (
+                        <Button
+                          isIconOnly
+                          color={"warning"}
+                          variant={"ghost"}
+                          isDisabled={item.isRated as boolean}
+                          onPress={() => {
+                            onOpenChangeFeedback();
+                            setCakePayload({
+                              cakeId: (item?.cakeId as ICake)._id,
+                              selectedVariants: item.selectedVariants,
+                            });
+                          }}
+                        >
+                          {iconConfig.star.base}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
-              <OrderCustomerInfo
-                customerInfo={orderData.orderGroupId.customerInfo}
-                paymentStatus={orderData.orderGroupId.paymentStatus}
-                deliveryMethod={orderData.orderOptions?.deliveryMethod}
-                urgentOrder={orderData.orderUrgent as IOrderUrgent}
-              />
             </div>
-            <div className="flex basis-4/12 flex-col gap-4">
-              <BillInfo
-                orderSummary={orderData.orderSummary}
-                voucherData={orderData.voucherCode}
-                orderPointUsage={orderData.orderPoint ?? 0}
-              />
-              <OrderStatus orderStatus={orderData.orderStatus} explainReason={orderData.explainReason} />
-              <div className="w-full">
-                {orderData.orderStatus === "completed" && (
-                  <>
-                    <Button
-                      className={clsx("mb-2 w-full", {
-                        "cursor-not-allowed": isMoreThanHalfDay(orderData.updatedAt),
-                      })}
-                      variant="solid"
-                      color="danger"
-                      size="lg"
-                      radius="lg"
-                      onPress={onOpenChangeOrderReturn}
-                      isDisabled={isMoreThanHalfDay(orderData.updatedAt)}
-                    >
-                      {isMoreThanHalfDay(orderData.updatedAt) ? "Quá thời gian trả hàng" : "Trả hàng"}
-                    </Button>
-                  </>
-                )}
-                {orderData.orderStatus !== "cancelled" &&
-                orderData.orderStatus !== "completed" &&
-                orderData.orderStatus !== "returned" ? (
+            <OrderCustomerInfo
+              customerInfo={orderData.orderGroupId.customerInfo}
+              paymentStatus={orderData.orderGroupId.paymentStatus}
+              deliveryMethod={orderData.orderOptions?.deliveryMethod}
+              urgentOrder={orderData.orderUrgent as IOrderUrgent}
+            />
+          </div>
+          <div className="flex basis-4/12 flex-col gap-4">
+            <BillInfo
+              orderSummary={orderData.orderSummary}
+              voucherData={orderData.voucherCode}
+              orderPointUsage={orderData.orderPoint ?? 0}
+            />
+            <OrderStatus orderStatus={orderData.orderStatus} explainReason={orderData.explainReason} />
+            <div className="w-full">
+              {orderData.orderStatus === "completed" && (
+                <>
                   <Button
-                    startContent={iconConfig.xMark.medium}
+                    className={clsx("mb-2 w-full", {
+                      "cursor-not-allowed": isMoreThanHalfDay(orderData.updatedAt),
+                    })}
+                    variant="solid"
                     color="danger"
-                    className="w-full"
                     size="lg"
-                    onClick={onOpen}
                     radius="lg"
+                    onPress={onOpenChangeOrderReturn}
+                    isDisabled={isMoreThanHalfDay(orderData.updatedAt)}
                   >
-                    Hủy đơn hàng
+                    {isMoreThanHalfDay(orderData.updatedAt) ? "Quá thời gian trả hàng" : "Trả hàng"}
                   </Button>
-                ) : null}
-              </div>
+                </>
+              )}
+              {orderData.orderStatus !== "cancelled" &&
+              orderData.orderStatus !== "completed" &&
+              orderData.orderStatus !== "returned" ? (
+                <Button
+                  startContent={iconConfig.xMark.medium}
+                  color="danger"
+                  className="w-full"
+                  size="lg"
+                  onClick={onOpen}
+                  radius="lg"
+                >
+                  Hủy đơn hàng
+                </Button>
+              ) : null}
             </div>
           </div>
         </div>

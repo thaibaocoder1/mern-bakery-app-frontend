@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ModalConfirmDeleteItemCart from "./modal-confirm-delete-item-cart";
+import { displayImage } from "@/utils/display-image";
+import { slugify } from "@/utils/slugify";
 const BranchCart = () => {
   const { isOpen: isOpenDelete, onOpen: onOpenDelete, onOpenChange: onOpenChangeDelete } = useDisclosure();
   const {
@@ -146,8 +148,12 @@ const BranchCart = () => {
                     <div className="col-span-3 flex gap-x-4">
                       <div className="flex sm:gap-x-1 sm:justify-self-center">
                         <Image
-                          src={`http://localhost:3000/images/${cake?.cakeInfo?._id}/${cake.cakeInfo?.cakeThumbnail}`}
-                          alt="Error"
+                          src={displayImage(
+                            cake?.cakeInfo?.cakeThumbnail as string,
+                            cake?.cakeInfo?._id as string,
+                          )}
+                          fallbackSrc="https://placehold.co/400"
+                          alt={slugify(cake?.cakeInfo?.cakeName as string)}
                           className="h-[142px] w-[147px] max-[500px]:h-[80px] max-[500px]:w-[80px]"
                         />
                       </div>
