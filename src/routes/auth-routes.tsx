@@ -1,4 +1,3 @@
-import AuthenticationOtp from "@/pages/auth/authentication-otp";
 import ResetPassword from "@/pages/auth/reset-password";
 import SignIn from "@/pages/auth/sign-in";
 import SignInStaff from "@/pages/auth/sign-in-staff";
@@ -20,14 +19,6 @@ const authRoutes: RouteObject[] = [
     element: (
       <UnauthorizedClientRoutes>
         <SignUp />
-      </UnauthorizedClientRoutes>
-    ),
-  },
-  {
-    path: "/send-otp",
-    element: (
-      <UnauthorizedClientRoutes>
-        <AuthenticationOtp />
       </UnauthorizedClientRoutes>
     ),
   },

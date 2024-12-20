@@ -5,10 +5,9 @@ import clientRoutes from "@/config/routes/client-routes.config";
 import useCustomerAxios from "@/hooks/useCustomerAxios";
 import { IAPIResponse } from "@/types/api-response";
 import validateEmail from "@/utils/validate-email";
-import { Button, Image, Input, Spinner } from "@nextui-org/react";
+import { Button, Image, Input } from "@nextui-org/react";
 import clsx from "clsx";
 import { useState } from "react";
-import { RiSendPlaneFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const ResetPassword = () => {
@@ -56,17 +55,17 @@ const ResetPassword = () => {
 
   return (
     <section className="flex h-screen w-screen">
-      <div className="relative flex h-full min-w-[480px] flex-col items-center justify-center rounded-r-xl px-8 shadow-xl">
-        <div className={"absolute z-0 h-full"}>
-          <div className={"mt-12 flex w-full justify-center"}>
+      <div className="relative flex h-full flex-col items-center justify-center rounded-r-xl max-sm:w-full max-sm:px-2 sm:min-w-[480px] sm:px-8 sm:shadow-xl">
+        <div className={"pointer-events-none absolute z-0 h-full select-none"}>
+          <div className={"mt-12 flex w-full justify-center max-md:mt-10 max-md:opacity-40"}>
             <Link to={"/"}>
-              <Image src={imageAn} />
+              <Image src={imageAn} className="max-md:max-w-44" />
             </Link>
           </div>
         </div>
         <div className="z-10 flex w-full flex-col items-center justify-center gap-4">
-          <div className="flex w-full flex-col gap-y-4 max-2xl:px-4">
-            <h2 className="truncate">Quên mật khẩu? </h2>
+          <div className="flex w-full flex-col gap-4 max-[1450px]:px-4">
+            <h2 className="truncate max-sm:text-2xl">Quên mật khẩu? </h2>
 
             <Input
               onValueChange={(value) => setEmail(value)}
@@ -117,7 +116,7 @@ const ResetPassword = () => {
           </div>
         </div>
       </div>
-      <div className="flex grow-[1] items-center justify-center">
+      <div className="items-top flex grow-[1] justify-center">
         <Image src={logoAnbakery} className="max-[1450px]:px-8 max-lg:hidden" />
       </div>
     </section>

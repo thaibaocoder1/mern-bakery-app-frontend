@@ -27,11 +27,13 @@ const HomePage = () => {
       .then(([cakesResponse, branchesResponse]) => {
         const filteredData = cakesResponse.data.results.filter((item) => !item.isDeleted && !item.isHide);
         setListCakes(
-          filteredData.sort((a, b) => {
-            const dateA = new Date(a.updatedAt).getTime();
-            const dateB = new Date(b.updatedAt).getTime();
-            return dateB - dateA;
-          }),
+          filteredData
+            .sort((a, b) => {
+              const dateA = new Date(a.updatedAt).getTime();
+              const dateB = new Date(b.updatedAt).getTime();
+              return dateB - dateA;
+            })
+            .slice(0, 4),
         );
         setBestSellingCakes(filteredData.filter((cake) => cake.soldCount >= 5));
         setMostViewedCakes(filteredData.filter((cake) => cake.views >= 35).slice(0, 4));
