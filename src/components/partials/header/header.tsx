@@ -160,7 +160,7 @@ const Header = () => {
           <NavLink
             to="cakes"
             className={({ isActive }) =>
-              cn("mr-8 w-full text-lg leading-7", isActive ? "text-primary" : "text-inherit")
+              cn("mr-8 w-full truncate text-lg leading-7", isActive ? "text-primary" : "text-inherit")
             }
           >
             <span className={`max-sm:text-[14px]`}>Menu bánh</span>
@@ -168,7 +168,10 @@ const Header = () => {
           <NavLink
             to="vouchers"
             className={({ isActive }) =>
-              cn("mr-8 w-full text-lg leading-7 max-md:hidden", isActive ? "text-primary" : "text-inherit")
+              cn(
+                "mr-8 inline-block w-max whitespace-nowrap text-lg leading-7 max-md:hidden",
+                isActive ? "text-primary" : "text-inherit",
+              )
             }
           >
             Khuyến mãi
