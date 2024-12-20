@@ -129,7 +129,7 @@ const BranchCart = () => {
         {cartCustomer.map((branchCart, index) => (
           <div key={index}>
             <div className="flex items-center justify-between rounded-lg bg-default-100 p-2">
-              <h5 className="max-[500px]: text-[16px]">{showBranchName(branchCart.branchId)}</h5>
+              <h5 className="max-[500px]:text-[16px]">{showBranchName(branchCart.branchId)}</h5>
             </div>
             <div>
               {branchCart.cartItems.map((cake, index) => {
@@ -153,7 +153,7 @@ const BranchCart = () => {
                       </div>
                       <div>
                         <div className="col-span-2 h-full flex-col justify-center gap-4 max-[500px]:items-center min-[500px]:flex">
-                          <h5 className="max-[500px]:font-light max-[390px]:text-[16px]">
+                          <h5 className="max-[500px]:text-sm max-[500px]:font-light">
                             {cake.cakeInfo?.cakeName}
                           </h5>
                           {selectedVariantsLength && (

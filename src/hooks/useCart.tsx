@@ -51,9 +51,7 @@ const useCart = () => {
     cakeVariants: ICakeVariant[],
     quantity: number,
   ) => {
-    // console.log("quantity", quantity);
     let priceOfCake: number = priceDefault;
-    // console.log("selectedVariants", selectedVariants);
     selectedVariants.map((variant) => {
       return cakeVariants.map((cakeVariant) => {
         if (cakeVariant._id === variant.variantKey) {

@@ -85,7 +85,12 @@ const Header = () => {
       setIsShowSearch(false);
     });
     setIsShowSearch(false);
+    return () =>
+      window.removeEventListener("scroll", () => {
+        setIsShowSearch(false);
+      });
   }, [pathname]);
+
   useEffect(() => {
     if (cookies.refreshToken && typeof cookies.refreshToken === "string") {
       const totalQuantity = cartCustomer.reduce(
